@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoTaller Oviedo – Reparación rápida y profesional</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --dark: #111318;
+      --panel: #16191f;
+      --border: #2a2d35;
+      --accent: #f5a623;
+      --accent2: #e8380d;
+      --white: #f0ede8;
+      --muted: #8a8d96;
+      --font-head: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      height: 64px;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .logo span { color: var(--accent); }
+
+    nav { display: flex; gap: 2rem; }
+    nav a {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    .header-cta {
+      background: var(--accent);
+      color: var(--black);
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.4rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .header-cta:hover { background: #ffbb45; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6vw 4vw 6vw 8vw;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-label {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-bottom: 2rem;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--black);
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2.2rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+    .btn-primary:hover { background: #ffbb45; transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .btn-green {
+      background: #25d366;
+      color: #fff;
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-green:hover { background: #1fba57; transform: translateY(-2px); }
+
+    .hero-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent2) 0%, transparent 60%);
+      opacity: 0.12;
+      z-index: 1;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(8rem, 18vw, 22rem);
+      color: rgba(245,166,35,0.04);
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      user-select: none;
+      white-space: nowrap;
+      z-index: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .hero-car-icon {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(8rem, 15vw, 18rem);
+      filter: drop-shadow(0 0 60px rgba(245,166,35,0.15));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 6vw;
+      right: 5vw;
+      display: flex;
+      gap: 2.5rem;
+      z-index: 3;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 2.2rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.25rem;
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 7rem 8vw; }
+
+    .section-label {
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    h2 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      text-transform: uppercase;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── BENEFITS ── */
+    #beneficios {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0;
+      margin-top: 4rem;
+      border: 1px solid var(--border);
+    }
+
+    .benefit-card {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .benefit-card:hover { background: rgba(245,166,35,0.04); }
+    .benefit-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.4s ease;
+    }
+    .benefit-card:hover::after { width: 100%; }
+
+    .benefit-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .benefit-title {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+      color: var(--white);
+    }
+    .benefit-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── SERVICES ── */
+    #servicios { background: var(--black); }
+
+    .services-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 1rem;
+    }
+
+    .services-intro p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .service-item {
+      background: var(--dark);
+      padding: 2rem 1.8rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+      transition: background 0.25s;
+      cursor: default;
+    }
+    .service-item:hover { background: #1a1d24; }
+
+    .service-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .service-name {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    .service-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ── RESEÑAS ── */
+    #resenas {
+      background: var(--panel);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stars {
+      color: var(--accent);
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .review-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      padding: 2.2rem;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .review-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .review-quote {
+      font-size: 3rem;
+      color: var(--accent);
+      font-family: Georgia, serif;
+      line-height: 1;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+
+    .review-text {
+      font-size: 0.95rem;
+      color: #c8c5be;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .reviewer-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--black);
+      flex-shrink: 0;
+    }
+    .reviewer-name {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .reviewer-date {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .google-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .google-dot { width: 10px; height: 10px; border-radius: 50%; background: #4caf50; }
+
+    /* ── MAPA + CONTACTO ── */
+    #contacto {
+      background: var(--dark);
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 3.5rem;
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s;
+    }
+    .contact-item:hover { border-color: var(--accent); }
+
+    .contact-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .contact-label {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+    .contact-value {
+      font-size: 1rem;
+      color: var(--white);
+      font-weight: 500;
+    }
+    .contact-sub { font-size: 0.85rem; color: var(--muted); }
+
+    .map-container {
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      min-height: 380px;
+      background: #181a20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-placeholder {
+      text-align: center;
+      color: var(--muted);
+    }
+    .map-placeholder-icon { font-size: 4rem; margin-bottom: 1rem; display: block; }
+    .map-placeholder-text {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+
+    /* Placeholder styled map */
+    .fake-map {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 40px),
+        #181a20;
+    }
+    .map-pin {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -60%);
+      font-size: 3rem;
+      filter: drop-shadow(0 4px 12px rgba(245,166,35,0.5));
+      animation: bounce 2s ease-in-out infinite;
+      z-index: 1;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translate(-50%, -60%); }
+      50% { transform: translate(-50%, -75%); }
+    }
+    .map-label {
+      position: absolute;
+      bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--black);
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.5rem;
+      white-space: nowrap;
+      z-index: 1;
+    }
+
+    /* ── FAQ ── */
+    #faq { background: var(--black); }
+
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 5rem;
+      margin-top: 1rem;
+    }
+
+    .faq-list { display: flex; flex-direction: column; gap: 0; margin-top: 2rem; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 0;
+      cursor: pointer;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      transition: color 0.2s;
+      gap: 1rem;
+    }
+    .faq-q:hover { color: var(--accent); }
+
+    .faq-arrow {
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: all 0.3s;
+      color: var(--accent);
+    }
+    .faq-item.open .faq-arrow {
+      background: var(--accent);
+      color: var(--black);
+      border-color: var(--accent);
+      transform: rotate(45deg);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      padding: 0;
+    }
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding-bottom: 1.4rem;
+    }
+
+    .faq-cta-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 3rem;
+      position: sticky;
+      top: 100px;
+    }
+    .faq-cta-box h3 {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .faq-cta-box p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.7; }
+    .faq-cta-box .btn-primary { width: 100%; justify-content: center; }
+
+    /* ── CTA FINAL ── */
+    #cta-final {
+      background: var(--accent);
+      padding: 7rem 8vw;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #cta-final::before {
+      content: 'AHORA';
+      position: absolute;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(8rem, 20vw, 22rem);
+      color: rgba(0,0,0,0.07);
+      letter-spacing: -0.05em;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    #cta-final h2 {
+      color: var(--black);
+      font-size: clamp(3rem, 6vw, 6rem);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    #cta-final p {
+      color: rgba(0,0,0,0.65);
+      font-size: 1.2rem;
+      max-width: 500px;
+      margin: 0 auto 3rem;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-final-btns {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .btn-dark {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1.1rem 2.5rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.2s;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+    .btn-dark:hover { background: #1a1a1a; transform: translateY(-2px); }
+
+    .btn-outline-dark {
+      background: transparent;
+      color: var(--black);
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1.1rem 2.5rem;
+      border: 2px solid var(--black);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.2s;
+    }
+    .btn-outline-dark:hover { background: var(--black); color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      padding: 3rem 8vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .footer-logo span { color: var(--accent); }
+
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ── FLOATING WHATSAPP ── */
+    .wa-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #25d366;
+      color: #fff;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      text-decoration: none;
+      z-index: 200;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.55); }
+    .wa-pulse {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid rgba(37,211,102,0.4);
+      animation: pulse 2s ease-out infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 4rem 6vw; }
+      .hero-stats { right: 6vw; bottom: 3rem; gap: 1.5rem; }
+      .services-layout, .contact-layout, .faq-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .faq-cta-box { position: static; }
+      nav { display: none; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      section { padding: 5rem 6vw; }
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Auto<span>Taller</span> Oviedo</div>
+    <nav>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#resenas">Reseñas</a>
+      <a href="#contacto">Contacto</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="tel:+34985000000" class="header-cta">☎ Llamar ahora</a>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-left">
+      <div class="hero-label">Taller mecánico · Oviedo</div>
+      <h1>Reparación<br>rápida y<br><em>sin líos</em></h1>
+      <p class="hero-sub">Tu coche listo en el menor tiempo posible. Presupuesto claro desde el primer momento. Sin sorpresas.</p>
+      <div class="hero-btns">
+        <a href="tel:+34985000000" class="btn-primary">📞 Llamar ahora</a>
+        <a href="https://wa.me/34985000000" class="btn-green">💬 WhatsApp</a>
+        <a href="#contacto" class="btn-outline">Pedir presupuesto</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-bg-text">AUTO</div>
+      <div class="hero-car-icon">🚗</div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">+800</div>
+          <div class="stat-label">Clientes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">15+</div>
+          <div class="stat-label">Años</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">4.9⭐</div>
+          <div class="stat-label">Google</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section id="beneficios">
+    <div class="section-label">Por qué elegirnos</div>
+    <h2>Lo que ganas<br>con nosotros</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card fade-up">
+        <span class="benefit-icon">⚡</span>
+        <div class="benefit-title">Atención rápida</div>
+        <p class="benefit-desc">Sin esperas innecesarias. Tu vehículo entra en taller el mismo día o al día siguiente.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <span class="benefit-icon">📋</span>
+        <div class="benefit-title">Presupuesto claro</div>
+        <p class="benefit-desc">Te informamos del coste antes de empezar. Sin sorpresas ni letras pequeñas al recoger el coche.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <span class="benefit-icon">🤝</span>
+        <div class="benefit-title">Trato profesional</div>
+        <p class="benefit-desc">Mecánicos certificados con más de 15 años de experiencia. Explicamos qué hacemos y por qué.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <span class="benefit-icon">📍</span>
+        <div class="benefit-title">Ubicación fácil</div>
+        <p class="benefit-desc">En el centro de Oviedo, con parking propio para dejar el vehículo sin problemas.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <span class="benefit-icon">🔒</span>
+        <div class="benefit-title">Confianza garantizada</div>
+        <p class="benefit-desc">Más de 800 clientes satisfechos y una valoración de 4.9 estrellas en Google.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <span class="benefit-icon">🛡️</span>
+        <div class="benefit-title">Garantía en reparaciones</div>
+        <p class="benefit-desc">Todas nuestras reparaciones llevan garantía de piezas y mano de obra por escrito.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="services-layout">
+      <div class="services-intro">
+        <div class="section-label">Qué hacemos</div>
+        <h2>Nuestros<br>servicios</h2>
+        <p>Mecánica general y especializada para todo tipo de vehículos. Trabajamos con todas las marcas y modelos, nacionales e importación.</p>
+        <a href="#contacto" class="btn-primary" style="margin-top: 1rem;">Pedir cita</a>
+      </div>
+      <div class="services-grid">
+        <div class="service-item fade-up">
+          <span class="service-icon">🔧</span>
+          <div>
+            <div class="service-name">Mecánica general</div>
+            <div class="service-desc">Reparación integral de motor, transmisión y suspensión.</div>
+          </div>
+        </div>
+        <div class="service-item fade-up">
+          <span class="service-icon">🔍</span>
+          <div>
+            <div class="service-name">Diagnosis</div>
+            <div class="service-desc">Escáner electrónico para detectar cualquier avería al instante.</div>
+          </div>
+        </div>
+        <div class="service-item fade-up">
+          <span class="service-icon">📋</span>
+          <div>
+            <div class="service-name">Revisiones ITV</div>
+            <div class="service-desc">Pre-ITV y revisiones periódicas según fabricante.</div>
+          </div>
+        </div>
+        <div class="service-item fade-up">
+          <span class="service-icon">🛢️</span>
+          <div>
+            <div class="service-name">Cambio de aceite</div>
+            <div class="service-desc">Aceites de todas las viscosidades con filtros de calidad.</div>
+          </div>
+        </div>
+        <div class="service-item fade-up">
+          <span class="service-icon">🛑</span>
+          <div>
+            <div class="service-name">Frenos</div>
+            <div class="service-desc">Pastillas, discos, líquido de frenos y ABS.</div>
+          </div>
+        </div>
+        <div class="service-item fade-up">
+          <span class="service-icon">🔄</span>
+          <div>
+            <div class="service-name">Neumáticos</div>
+            <div class="service-desc">Montaje, equilibrado, alineación y permuta de temporada.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEÑAS -->
+  <section id="resenas">
+    <div class="section-label">Lo que dicen</div>
+    <h2>Clientes<br>satisfechos</h2>
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">Llevé el coche con un problema en el motor que otro taller no supo detectar. En AutoTaller lo encontraron en menos de una hora y me lo entregaron al día siguiente. Precio justo y sin sorpresas.</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">CM</div>
+          <div>
+            <div class="reviewer-name">Carlos M.</div>
+            <div class="reviewer-date">Hace 2 semanas · Google</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">Llevo 5 años trayendo aquí todos mis coches. El trato es excelente, siempre te explican qué van a hacer y el presupuesto es transparente. No se puede pedir más a un taller.</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">LG</div>
+          <div>
+            <div class="reviewer-name">Laura G.</div>
+            <div class="reviewer-date">Hace 1 mes · Google</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">Fui a cambiar los frenos pensando que me iban a cobrar una fortuna y salí muy gratamente sorprendido. Rápidos, profesionales y honestos. Sin duda el mejor taller de Oviedo.</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">AR</div>
+          <div>
+            <div class="reviewer-name">Alejandro R.</div>
+            <div class="reviewer-date">Hace 3 semanas · Google</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="google-badge">
+      <span class="google-dot"></span>
+      4.9 / 5 en Google · +120 reseñas verificadas
+    </div>
+  </section>
+
+  <!-- MAPA + CONTACTO -->
+  <section id="contacto">
+    <div class="section-label">Dónde estamos</div>
+    <h2>Ven a vernos</h2>
+    <div class="contact-layout">
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="contact-icon">📍</span>
+          <div>
+            <div class="contact-label">Dirección</div>
+            <div class="contact-value">Calle Independencia, 14</div>
+            <div class="contact-sub">33004 Oviedo, Asturias</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
+          <div>
+            <div class="contact-label">Teléfono</div>
+            <div class="contact-value"><a href="tel:+34985000000" style="color:inherit;text-decoration:none;">985 000 000</a></div>
+            <div class="contact-sub">Llamadas y WhatsApp</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">🕐</span>
+          <div>
+            <div class="contact-label">Horario</div>
+            <div class="contact-value">Lun–Vie: 8:30 – 19:00</div>
+            <div class="contact-sub">Sábados: 9:00 – 13:00 · Domingos cerrado</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">✉️</span>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">info@autotalleroviedo.es</div>
+            <div class="contact-sub">Respondemos en menos de 2 horas</div>
+          </div>
+        </div>
+        <a href="https://wa.me/34985000000?text=Hola,%20quiero%20pedir%20presupuesto" class="btn-green" style="width:100%;justify-content:center;margin-top:0.5rem;">💬 Escribir por WhatsApp</a>
+      </div>
+      <div class="map-container">
+        <div class="fake-map"></div>
+        <div class="map-pin">📍</div>
+        <div class="map-label">AutoTaller Oviedo · C/ Independencia 14</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="faq-layout">
+      <div>
+        <div class="section-label">Dudas frecuentes</div>
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              ¿Cuál es vuestro horario?
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-a">Abrimos de lunes a viernes de 8:30 a 19:00 h sin cerrar al mediodía. Los sábados de 9:00 a 13:00 h. Los domingos y festivos estamos cerrados.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              ¿Necesito cita previa?
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-a">Para la mayoría de servicios recomendamos cita previa para asegurarte plaza, aunque admitimos urgencias sin cita. Puedes reservar por teléfono o WhatsApp en menos de un minuto.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              ¿El presupuesto es gratuito?
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-a">Sí, el presupuesto es completamente gratuito y sin compromiso. Te lo entregamos por escrito antes de empezar cualquier reparación.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              ¿Dónde estáis exactamente?
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-a">Estamos en Calle Independencia 14, Oviedo. Tenemos parking propio para dejar el vehículo. A 5 minutos a pie del centro y con parada de bus justo enfrente.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              ¿Trabajáis con todas las marcas?
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-a">Sí, trabajamos con todos los vehículos: marcas nacionales, europeas y asiáticas. Tanto gasolina, diésel como híbridos. Sin restricciones de marca ni modelo.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              ¿Cuánto tarda una reparación normal?
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-a">Depende de la reparación, pero la mayoría de intervenciones se resuelven en el mismo día. Para reparaciones más complejas te avisamos con antelación y te damos fecha exacta.</div>
+          </div>
+        </div>
+      </div>
+      <div class="faq-cta-box">
+        <h3>¿Tienes más<br>preguntas?</h3>
+        <p>Escríbenos por WhatsApp o llámanos directamente. Te respondemos en el momento, sin bots ni esperas.</p>
+        <a href="https://wa.me/34985000000" class="btn-primary" style="width:100%;justify-content:center;">💬 Preguntar por WhatsApp</a>
+        <a href="tel:+34985000000" class="btn-outline" style="width:100%;justify-content:center;margin-top:1rem;">📞 Llamar ahora</a>
+        <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);">
+          <div style="font-family:var(--font-head);font-weight:700;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">También estamos en</div>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+            <span style="font-size:1.5rem;" title="Google">🔍</span>
+            <span style="font-size:1.5rem;" title="Instagram">📸</span>
+            <span style="font-size:1.5rem;" title="Facebook">👍</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="cta-final">
+    <h2>Pide tu<br>presupuesto hoy</h2>
+    <p>Sin esperas, sin letra pequeña. Tu coche en las mejores manos de Oviedo.</p>
+    <div class="cta-final-btns">
+      <a href="tel:+34985000000" class="btn-dark">📞 Llamar ahora</a>
+      <a href="https://wa.me/34985000000" class="btn-outline-dark">💬 WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Auto<span>Taller</span> Oviedo</div>
+    <div class="footer-links">
+      <a href="#beneficios">Beneficios</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#resenas">Reseñas</a>
+      <a href="#contacto">Contacto</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-copy">© 2025 AutoTaller Oviedo · Todos los derechos reservados</div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/34985000000" class="wa-float" title="WhatsApp">
+    <div class="wa-pulse"></div>
+    💬
+  </a>
+
+  <script>
+    // FAQ toggle
+    function toggleFaq(el) {
+      const item = el.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // Scroll fade-up animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, entry.target.dataset.delay || 0);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach((el, i) => {
+      el.dataset.delay = (i % 4) * 100;
+      observer.observe(el);
+    });
+
+    // Header scroll effect
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      header.style.borderBottomColor = window.scrollY > 50
+        ? 'rgba(245,166,35,0.2)'
+        : 'var(--border)';
+    });
+  </script>
+</body>
+</html>
