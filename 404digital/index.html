@@ -1,1277 +1,1650 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoTaller Oviedo – Reparación rápida y profesional</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404 Digitals – Soluciones Digitales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #0a0a0a;
-      --dark: #111318;
-      --panel: #16191f;
-      --border: #2a2d35;
-      --accent: #f5a623;
-      --accent2: #e8380d;
-      --white: #f0ede8;
-      --muted: #8a8d96;
-      --font-head: 'Barlow Condensed', sans-serif;
-      --font-body: 'Barlow', sans-serif;
+      --bg: #050508;
+      --surface: #0d0d14;
+      --panel: #12121c;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(99,179,237,0.2);
+      --cyan: #63b3ed;
+      --cyan2: #90cdf4;
+      --green: #68d391;
+      --white: #f0f4ff;
+      --muted: #6b7280;
+      --head: 'Syne', sans-serif;
+      --body: 'DM Sans', sans-serif;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--black);
+      background: var(--bg);
       color: var(--white);
-      font-family: var(--font-body);
+      font-family: var(--body);
       font-size: 16px;
       line-height: 1.6;
       overflow-x: hidden;
+      cursor: none;
     }
 
-    /* ── NOISE TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
+    #cursor {
+      width: 10px; height: 10px;
+      background: var(--cyan);
+      border-radius: 50%;
       position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 9999;
-      opacity: 0.4;
+      transition: transform 0.15s ease;
+      mix-blend-mode: screen;
+    }
+    #cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(99,179,237,0.4);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.08s linear;
+    }
+    body:has(a:hover) #cursor, body:has(button:hover) #cursor { transform: scale(3); }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(99,179,237,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,179,237,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    /* ── HEADER ── */
     header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 5vw;
-      height: 64px;
-      background: rgba(10,10,10,0.92);
-      backdrop-filter: blur(12px);
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 68px;
+      background: rgba(5,5,8,0.85);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
     }
 
     .logo {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: 1.5rem;
-      letter-spacing: 0.04em;
+      font-family: var(--head);
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
       color: var(--white);
-      text-transform: uppercase;
+      text-decoration: none;
     }
-    .logo span { color: var(--accent); }
+    .logo span { color: var(--cyan); }
 
-    nav { display: flex; gap: 2rem; }
+    nav { display: flex; gap: 2.5rem; }
     nav a {
-      font-family: var(--font-head);
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-family: var(--body);
+      font-size: 0.88rem;
+      font-weight: 500;
       color: var(--muted);
       text-decoration: none;
+      letter-spacing: 0.02em;
       transition: color 0.2s;
     }
-    nav a:hover { color: var(--accent); }
+    nav a:hover { color: var(--cyan); }
 
-    .header-cta {
-      background: var(--accent);
-      color: var(--black);
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 0.9rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      font-family: var(--body);
+      font-weight: 500;
+      font-size: 0.88rem;
       padding: 0.55rem 1.4rem;
-      border: none;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
+      transition: all 0.25s;
+      letter-spacing: 0.04em;
     }
-    .header-cta:hover { background: #ffbb45; transform: translateY(-1px); }
+    .nav-cta:hover { background: var(--cyan); color: var(--bg); }
 
-    /* ── HERO ── */
     #hero {
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding-top: 64px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-left {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 6vw 4vw 6vw 8vw;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-label {
-      font-family: var(--font-head);
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .hero-label::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 2px;
-      background: var(--accent);
-    }
-
-    h1 {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: clamp(3.5rem, 7vw, 6.5rem);
-      line-height: 0.92;
-      text-transform: uppercase;
-      letter-spacing: -0.01em;
-      margin-bottom: 2rem;
-    }
-    h1 em {
-      font-style: normal;
-      color: var(--accent);
-      display: block;
-    }
-
-    .hero-sub {
-      font-size: 1.2rem;
-      color: var(--muted);
-      max-width: 420px;
-      margin-bottom: 3rem;
-      line-height: 1.7;
-    }
-
-    .hero-btns {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: var(--black);
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 1rem 2.2rem;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s;
-      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    }
-    .btn-primary:hover { background: #ffbb45; transform: translateY(-2px); }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--white);
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 1rem 2rem;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s;
-    }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-
-    .btn-green {
-      background: #25d366;
-      color: #fff;
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 1rem 2rem;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s;
-    }
-    .btn-green:hover { background: #1fba57; transform: translateY(-2px); }
-
-    .hero-right {
-      position: relative;
-      display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-    }
-
-    .hero-right::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--accent2) 0%, transparent 60%);
-      opacity: 0.12;
+      text-align: center;
+      padding: 100px 6vw 6vw;
+      position: relative;
       z-index: 1;
     }
 
-    .hero-bg-text {
-      position: absolute;
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: clamp(8rem, 18vw, 22rem);
-      color: rgba(245,166,35,0.04);
-      letter-spacing: -0.05em;
-      text-transform: uppercase;
-      user-select: none;
-      white-space: nowrap;
-      z-index: 0;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .hero-car-icon {
-      position: relative;
-      z-index: 2;
-      font-size: clamp(8rem, 15vw, 18rem);
-      filter: drop-shadow(0 0 60px rgba(245,166,35,0.15));
-      animation: float 4s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-12px); }
-    }
-
-    .hero-stats {
-      position: absolute;
-      bottom: 6vw;
-      right: 5vw;
-      display: flex;
-      gap: 2.5rem;
-      z-index: 3;
-    }
-    .stat {
-      text-align: center;
-    }
-    .stat-num {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: 2.2rem;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 0.25rem;
-    }
-
-    /* ── SECTION COMMON ── */
-    section { padding: 7rem 8vw; }
-
-    .section-label {
-      font-family: var(--font-head);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-      display: flex;
+    .hero-eyebrow {
+      display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid var(--border2);
+      padding: 0.45rem 1.2rem;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 0.8s ease both;
     }
-    .section-label::before {
+    .hero-eyebrow::before {
       content: '';
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--accent);
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: blink 2s ease infinite;
     }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    h1 {
+      font-family: var(--head);
+      font-weight: 800;
+      font-size: clamp(3rem, 7vw, 7rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.9s 0.1s ease both;
+    }
+    h1 .line2 {
+      display: block;
+      background: linear-gradient(90deg, var(--cyan), var(--cyan2), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 3.5rem;
+      line-height: 1.8;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+
+    .hero-btns {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--cyan);
+      color: var(--bg);
+      font-family: var(--body);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.9rem 2.2rem;
+      border: none; cursor: pointer;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.25s;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary:hover { background: var(--cyan2); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,179,237,0.25); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      font-family: var(--body);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.9rem 2.2rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.25s;
+    }
+    .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: var(--muted); font-size: 0.75rem; letter-spacing: 0.1em;
+      text-transform: uppercase; animation: fadeUp 1s 0.6s ease both;
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--cyan), transparent);
+      animation: scrollAnim 2s ease infinite;
+    }
+    @keyframes scrollAnim { 0%{opacity:0;transform:scaleY(0);transform-origin:top} 50%{opacity:1;transform:scaleY(1)} 100%{opacity:0;transform:scaleY(1);transform-origin:bottom} }
+
+    #metrics {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .metric {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      transition: background 0.3s;
+    }
+    .metric:hover { background: rgba(99,179,237,0.03); }
+    .metric:last-child { border-right: none; }
+
+    .metric-num {
+      font-family: var(--head);
+      font-weight: 800;
+      font-size: 2.8rem;
+      letter-spacing: -0.03em;
+      color: var(--cyan);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .metric-label { font-size: 0.85rem; color: var(--muted); letter-spacing: 0.05em; }
+
+    section { padding: 8rem 6vw; position: relative; z-index: 1; }
+
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 1.2rem;
+    }
+    .section-tag::before { content: '//'; opacity: 0.5; }
 
     h2 {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      text-transform: uppercase;
-      line-height: 0.95;
-      letter-spacing: -0.01em;
+      font-family: var(--head);
+      font-weight: 800;
+      font-size: clamp(2.2rem, 4.5vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
       margin-bottom: 1.5rem;
     }
 
-    /* ── BENEFITS ── */
-    #beneficios {
-      background: var(--dark);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
+    #servicios { background: var(--bg); }
 
-    .benefits-grid {
+    .services-intro {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 0;
-      margin-top: 4rem;
-      border: 1px solid var(--border);
-    }
-
-    .benefit-card {
-      padding: 2.5rem 2rem;
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s;
-    }
-    .benefit-card:hover { background: rgba(245,166,35,0.04); }
-    .benefit-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0; height: 2px;
-      background: var(--accent);
-      transition: width 0.4s ease;
-    }
-    .benefit-card:hover::after { width: 100%; }
-
-    .benefit-icon {
-      font-size: 2.2rem;
-      margin-bottom: 1.2rem;
-      display: block;
-    }
-    .benefit-title {
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 1.2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.6rem;
-      color: var(--white);
-    }
-    .benefit-desc {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* ── SERVICES ── */
-    #servicios { background: var(--black); }
-
-    .services-layout {
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
+      grid-template-columns: 1fr 1fr;
       gap: 5rem;
-      align-items: start;
-      margin-top: 1rem;
+      align-items: end;
+      margin-bottom: 5rem;
     }
-
-    .services-intro p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.75;
-      margin-bottom: 2rem;
-    }
+    .services-intro p { color: var(--muted); font-size: 1.05rem; line-height: 1.8; }
 
     .services-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 1px;
       background: var(--border);
     }
 
-    .service-item {
-      background: var(--dark);
-      padding: 2rem 1.8rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 1.2rem;
-      transition: background 0.25s;
+    .service-card {
+      background: var(--surface);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
       cursor: default;
     }
-    .service-item:hover { background: #1a1d24; }
-
-    .service-icon {
-      font-size: 1.8rem;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
+    .service-card:hover { background: #0f1018; }
+    .service-card:hover::before { opacity: 1; }
 
-    .service-name {
-      font-family: var(--font-head);
+    .service-num {
+      font-family: var(--head);
       font-weight: 800;
-      font-size: 1.05rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.4rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--cyan);
+      opacity: 0.5;
+      margin-bottom: 2rem;
     }
-    .service-desc {
-      font-size: 0.85rem;
-      color: var(--muted);
+    .service-icon { font-size: 2.2rem; margin-bottom: 1.5rem; display: block; }
+    .service-title {
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.8rem;
+      color: var(--white);
+    }
+    .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+    .service-tag {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid var(--border2);
+      padding: 0.3rem 0.8rem;
     }
 
-    /* ── RESEÑAS ── */
-    #resenas {
-      background: var(--panel);
+    #proceso {
+      background: var(--surface);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
 
-    .stars {
-      color: var(--accent);
-      font-size: 1.2rem;
-      letter-spacing: 0.1em;
-    }
-
-    .reviews-grid {
+    .process-steps {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3.5rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 5rem;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 2.2rem; left: 12%; right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--green), transparent);
+      opacity: 0.3;
     }
 
-    .review-card {
-      background: var(--dark);
-      border: 1px solid var(--border);
-      padding: 2.2rem;
+    .step { padding: 0 2rem 0 0; position: relative; }
+    .step-circle {
+      width: 44px; height: 44px;
+      border: 1px solid var(--border2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--head);
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--cyan);
+      margin-bottom: 2rem;
+      background: var(--bg);
+      position: relative; z-index: 1;
+    }
+    .step-title { font-family: var(--head); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
+    .step-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+    #portfolio { background: var(--bg); }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1px;
+      background: var(--border);
+      margin-top: 4rem;
+    }
+
+    .portfolio-item {
+      background: var(--surface);
+      padding: 3rem;
       position: relative;
+      overflow: hidden;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      transition: background 0.3s;
+    }
+    .portfolio-item:first-child { grid-row: span 2; min-height: 460px; }
+    .portfolio-item:hover { background: #0f1018; }
+    .portfolio-item::before {
+      content: attr(data-num);
+      position: absolute;
+      top: 2rem; right: 2rem;
+      font-family: var(--head);
+      font-size: 5rem;
+      font-weight: 800;
+      color: rgba(99,179,237,0.04);
+      line-height: 1;
+    }
+
+    .portfolio-tag {
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.8rem; opacity: 0.7;
+    }
+    .portfolio-title {
+      font-family: var(--head); font-weight: 700;
+      font-size: 1.3rem; letter-spacing: -0.01em; margin-bottom: 0.5rem;
+    }
+    .portfolio-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .portfolio-arrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin-top: 1.5rem; font-size: 0.85rem; font-weight: 600;
+      color: var(--cyan); text-decoration: none;
+      opacity: 0; transform: translateX(-8px); transition: all 0.25s;
+    }
+    .portfolio-item:hover .portfolio-arrow { opacity: 1; transform: translateX(0); }
+
+    #precios {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin-top: 4rem;
+    }
+
+    .pricing-card {
+      background: var(--bg);
+      padding: 3rem 2.5rem;
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .pricing-card.featured {
+      background: var(--panel);
+      border: 1px solid var(--border2);
+      margin: -1px;
+      z-index: 2;
+    }
+    .pricing-card:hover { transform: translateY(-4px); }
+
+    .pricing-badge {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--bg); background: var(--cyan);
+      padding: 0.3rem 0.8rem; margin-bottom: 1.5rem;
+    }
+
+    .pricing-name {
+      font-family: var(--head); font-weight: 700;
+      font-size: 1rem; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem;
+    }
+
+    .pricing-price {
+      font-family: var(--head); font-weight: 800;
+      font-size: 3.5rem; letter-spacing: -0.04em;
+      line-height: 1; color: var(--white); margin-bottom: 0.4rem;
+    }
+    .pricing-price span { font-size: 1.5rem; color: var(--muted); }
+    .pricing-period { font-size: 0.85rem; color: var(--muted); margin-bottom: 2.5rem; }
+
+    .pricing-features { list-style: none; margin-bottom: 2.5rem; }
+    .pricing-features li {
+      font-size: 0.9rem; color: var(--muted);
+      padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .pricing-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .pricing-features li.no { color: rgba(107,114,128,0.4); }
+    .pricing-features li.no::before { content: '–'; color: rgba(107,114,128,0.3); }
+
+    .btn-pricing {
+      width: 100%; padding: 0.9rem;
+      font-family: var(--body); font-weight: 600; font-size: 0.9rem;
+      cursor: pointer; transition: all 0.25s; letter-spacing: 0.04em;
+      text-align: center; display: block; text-decoration: none;
+    }
+    .btn-pricing-outline { background: transparent; border: 1px solid var(--border); color: var(--white); }
+    .btn-pricing-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+    .btn-pricing-solid { background: var(--cyan); border: 1px solid var(--cyan); color: var(--bg); }
+    .btn-pricing-solid:hover { background: var(--cyan2); }
+
+    #testimonios { background: var(--bg); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .testimonial-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
       transition: border-color 0.3s, transform 0.3s;
     }
-    .review-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .testimonial-card:hover { border-color: var(--border2); transform: translateY(-4px); }
 
-    .review-quote {
-      font-size: 3rem;
-      color: var(--accent);
-      font-family: Georgia, serif;
-      line-height: 1;
-      margin-bottom: 1rem;
-      opacity: 0.6;
+    .t-stars { color: var(--cyan); font-size: 0.9rem; letter-spacing: 0.1em; margin-bottom: 1.2rem; }
+    .t-text { font-size: 0.95rem; color: #9ca3af; line-height: 1.75; font-style: italic; margin-bottom: 1.8rem; }
+    .t-author { display: flex; align-items: center; gap: 1rem; }
+    .t-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--head); font-weight: 800; font-size: 0.9rem;
+      color: var(--bg); flex-shrink: 0;
     }
+    .t-name { font-family: var(--head); font-weight: 700; font-size: 0.95rem; }
+    .t-role { font-size: 0.8rem; color: var(--muted); }
 
-    .review-text {
-      font-size: 0.95rem;
-      color: #c8c5be;
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-      font-style: italic;
-    }
-
-    .reviewer {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .reviewer-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: 1.1rem;
-      color: var(--black);
-      flex-shrink: 0;
-    }
-    .reviewer-name {
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .reviewer-date {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    .google-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 3rem;
-      background: var(--dark);
-      border: 1px solid var(--border);
-      padding: 0.75rem 1.5rem;
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .google-dot { width: 10px; height: 10px; border-radius: 50%; background: #4caf50; }
-
-    /* ── MAPA + CONTACTO ── */
-    #contacto {
-      background: var(--dark);
-    }
+    #contacto { background: var(--surface); border-top: 1px solid var(--border); }
 
     .contact-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      margin-top: 3.5rem;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 6rem;
+      margin-top: 1rem;
     }
 
-    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-info h3 { font-family: var(--head); font-weight: 700; font-size: 1.5rem; margin-bottom: 1rem; }
+    .contact-info p { color: var(--muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 3rem; }
 
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.2rem;
-      padding: 1.5rem;
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.2rem 1.5rem;
       border: 1px solid var(--border);
-      transition: border-color 0.3s;
+      text-decoration: none; color: var(--white); transition: all 0.25s;
     }
-    .contact-item:hover { border-color: var(--accent); }
+    .contact-link:hover { border-color: var(--border2); background: rgba(99,179,237,0.04); }
+    .contact-link-icon { font-size: 1.3rem; }
+    .contact-link-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .contact-link-value { font-weight: 500; font-size: 0.95rem; }
 
-    .contact-icon {
-      font-size: 1.5rem;
-      flex-shrink: 0;
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group label {
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
     }
-    .contact-label {
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      margin-bottom: 0.3rem;
-    }
-    .contact-value {
-      font-size: 1rem;
-      color: var(--white);
-      font-weight: 500;
-    }
-    .contact-sub { font-size: 0.85rem; color: var(--muted); }
-
-    .map-container {
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--bg);
       border: 1px solid var(--border);
-      overflow: hidden;
-      position: relative;
-      min-height: 380px;
-      background: #181a20;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .map-placeholder {
-      text-align: center;
-      color: var(--muted);
-    }
-    .map-placeholder-icon { font-size: 4rem; margin-bottom: 1rem; display: block; }
-    .map-placeholder-text {
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.5rem;
       color: var(--white);
+      font-family: var(--body);
+      font-size: 0.95rem;
+      padding: 0.9rem 1.2rem;
+      outline: none;
+      transition: border-color 0.25s;
+      resize: none;
+      appearance: none;
     }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--cyan); }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(107,114,128,0.5); }
+    .form-group textarea { min-height: 120px; }
 
-    /* Placeholder styled map */
-    .fake-map {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 40px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 40px),
-        #181a20;
+    .form-submit {
+      background: var(--cyan); color: var(--bg); border: none;
+      font-family: var(--body); font-weight: 600; font-size: 0.95rem;
+      padding: 1rem 2rem; cursor: pointer; transition: all 0.25s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
     }
-    .map-pin {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -60%);
-      font-size: 3rem;
-      filter: drop-shadow(0 4px 12px rgba(245,166,35,0.5));
-      animation: bounce 2s ease-in-out infinite;
-      z-index: 1;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translate(-50%, -60%); }
-      50% { transform: translate(-50%, -75%); }
-    }
-    .map-label {
-      position: absolute;
-      bottom: 1.5rem; left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent);
-      color: var(--black);
-      font-family: var(--font-head);
-      font-weight: 800;
+    .form-submit:hover { background: var(--cyan2); }
+    .form-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    .form-success {
+      display: none;
+      background: rgba(104,211,145,0.08);
+      border: 1px solid rgba(104,211,145,0.3);
+      color: var(--green);
+      padding: 1.2rem;
       font-size: 0.9rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.6rem 1.5rem;
-      white-space: nowrap;
-      z-index: 1;
+      text-align: center;
     }
 
-    /* ── FAQ ── */
-    #faq { background: var(--black); }
+    .form-error {
+      display: none;
+      background: rgba(252,129,129,0.08);
+      border: 1px solid rgba(252,129,129,0.3);
+      color: #fc8181;
+      padding: 1.2rem;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    #faq { background: var(--bg); }
 
     .faq-layout {
       display: grid;
       grid-template-columns: 1fr 1.5fr;
-      gap: 5rem;
+      gap: 6rem;
       margin-top: 1rem;
     }
 
-    .faq-list { display: flex; flex-direction: column; gap: 0; margin-top: 2rem; }
-
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-    }
-
+    .faq-sticky { position: sticky; top: 100px; }
+    .faq-list { margin-top: 2rem; }
+    .faq-item { border-bottom: 1px solid var(--border); }
     .faq-q {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.4rem 0;
-      cursor: pointer;
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 1.05rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--white);
-      transition: color 0.2s;
-      gap: 1rem;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 0; cursor: pointer;
+      font-family: var(--head); font-weight: 600; font-size: 1rem;
+      color: var(--white); transition: color 0.2s; gap: 1rem; letter-spacing: -0.01em;
     }
-    .faq-q:hover { color: var(--accent); }
-
-    .faq-arrow {
-      width: 24px;
-      height: 24px;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
-      transition: all 0.3s;
-      color: var(--accent);
+    .faq-q:hover { color: var(--cyan); }
+    .faq-icon {
+      width: 22px; height: 22px;
+      border: 1px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; flex-shrink: 0; color: var(--cyan); transition: all 0.3s;
     }
-    .faq-item.open .faq-arrow {
-      background: var(--accent);
-      color: var(--black);
-      border-color: var(--accent);
-      transform: rotate(45deg);
-    }
-
+    .faq-item.open .faq-icon { background: var(--cyan); color: var(--bg); transform: rotate(45deg); }
     .faq-a {
-      max-height: 0;
-      overflow: hidden;
+      max-height: 0; overflow: hidden;
       transition: max-height 0.4s ease, padding 0.3s;
-      font-size: 0.95rem;
-      color: var(--muted);
-      line-height: 1.7;
-      padding: 0;
+      font-size: 0.92rem; color: var(--muted); line-height: 1.75;
     }
-    .faq-item.open .faq-a {
-      max-height: 200px;
-      padding-bottom: 1.4rem;
-    }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 1.4rem; }
 
-    .faq-cta-box {
+    /* CHATBOT */
+    #chatbot-btn {
+      position: fixed; bottom: 2.2rem; right: 2.2rem;
+      width: 58px; height: 58px;
+      background: linear-gradient(135deg, #1a3a52, #0d1f2e);
+      border: 1px solid var(--border2); border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      z-index: 900;
+      box-shadow: 0 0 0 0 rgba(99,179,237,0.4), 0 8px 32px rgba(0,0,0,0.6);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+      overflow: visible;
+    }
+    #chatbot-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 0 6px rgba(99,179,237,0.08), 0 12px 40px rgba(0,0,0,0.7);
+    }
+    #chatbot-btn svg { width: 22px; height: 22px; color: var(--cyan); transition: transform 0.3s; flex-shrink: 0; }
+    #chatbot-btn.open svg { transform: rotate(180deg); }
+
+    .btn-ring {
+      position: absolute; inset: -5px; border-radius: 50%;
+      border: 1px solid rgba(99,179,237,0.25);
+      animation: btnPulse 3s ease infinite; pointer-events: none;
+    }
+    .btn-ring:nth-child(2) { animation-delay: 1s; inset: -10px; border-color: rgba(99,179,237,0.1); }
+    @keyframes btnPulse { 0%{opacity:1;transform:scale(1)} 100%{opacity:0;transform:scale(1.5)} }
+
+    .notif-dot {
+      position: absolute; top: 3px; right: 3px;
+      width: 11px; height: 11px;
+      background: var(--green); border-radius: 50%;
+      border: 2px solid var(--bg);
+      animation: dotPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes dotPop { from{transform:scale(0)} to{transform:scale(1)} }
+
+    #chatbot-window {
+      position: fixed; bottom: 5.8rem; right: 2.2rem;
+      width: 400px; max-height: 600px; height: 600px;
       background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 3rem;
-      position: sticky;
-      top: 100px;
+      border: 1px solid rgba(99,179,237,0.15); border-radius: 4px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(99,179,237,0.04);
+      z-index: 800; display: flex; flex-direction: column; overflow: hidden;
+      transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease;
     }
-    .faq-cta-box h3 {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: 1.8rem;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .faq-cta-box p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.7; }
-    .faq-cta-box .btn-primary { width: 100%; justify-content: center; }
+    #chatbot-window.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
 
-    /* ── CTA FINAL ── */
-    #cta-final {
-      background: var(--accent);
-      padding: 7rem 8vw;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+    .chat-header {
+      padding: 1rem 1.4rem;
+      background: linear-gradient(135deg, #0f1520 0%, #111825 100%);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0; position: relative; overflow: hidden;
+    }
+    .chat-header::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent); opacity: 0.3;
     }
 
-    #cta-final::before {
-      content: 'AHORA';
-      position: absolute;
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: clamp(8rem, 20vw, 22rem);
-      color: rgba(0,0,0,0.07);
-      letter-spacing: -0.05em;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
-      pointer-events: none;
+    .chat-header-left { display: flex; align-items: center; gap: 0.9rem; }
+    .chat-avatar-wrap { position: relative; }
+    .chat-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, #1a3a52, #0f2233);
+      border: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .online-dot {
+      position: absolute; bottom: 1px; right: 1px;
+      width: 9px; height: 9px; background: var(--green);
+      border-radius: 50%; border: 2px solid var(--panel);
+    }
+    .chat-name { font-family: var(--head); font-weight: 700; font-size: 0.95rem; letter-spacing: -0.01em; color: var(--white); }
+    .chat-status {
+      display: flex; align-items: center; gap: 0.35rem;
+      font-size: 0.72rem; color: var(--green); margin-top: 0.1rem;
+    }
+    .chat-status::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: currentColor; animation: statusBlink 2.5s ease infinite;
+    }
+    @keyframes statusBlink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .chat-header-right { display: flex; align-items: center; gap: 0.5rem; }
+    .chat-action-btn {
+      background: none; border: none; color: var(--muted); cursor: pointer;
+      padding: 0.35rem; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s, background 0.2s; width: 28px; height: 28px;
+    }
+    .chat-action-btn:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+    .chat-action-btn svg { width: 14px; height: 14px; }
+
+    .chat-context-bar {
+      padding: 0.6rem 1.4rem;
+      background: rgba(99,179,237,0.04); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; color: var(--muted); flex-shrink: 0;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .chat-context-bar::-webkit-scrollbar { display: none; }
+    .ctx-chip {
+      display: flex; align-items: center; gap: 0.35rem;
+      padding: 0.25rem 0.7rem; border: 1px solid var(--border); border-radius: 20px;
+      white-space: nowrap; color: #9ca3af; font-size: 0.7rem; flex-shrink: 0; background: var(--surface);
+    }
+    .ctx-chip.active { border-color: var(--border2); color: var(--cyan); background: rgba(99,179,237,0.08); }
+
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 1.2rem 1.2rem 0.5rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+      scroll-behavior: smooth; scrollbar-width: thin;
+      scrollbar-color: rgba(99,179,237,0.12) transparent;
+    }
+    .chat-messages::-webkit-scrollbar { width: 3px; }
+    .chat-messages::-webkit-scrollbar-thumb { background: rgba(99,179,237,0.15); border-radius: 2px; }
+
+    .date-divider {
+      display: flex; align-items: center; gap: 0.8rem;
+      font-size: 0.68rem; color: var(--muted);
+      letter-spacing: 0.1em; text-transform: uppercase; margin: 0.5rem 0;
+    }
+    .date-divider::before, .date-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .msg-row { display: flex; flex-direction: column; animation: msgIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
+    .msg-row.user { align-items: flex-end; }
+    .msg-row.bot  { align-items: flex-start; }
+    @keyframes msgIn { from{opacity:0;transform:translateY(10px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+
+    .chat-bubble {
+      max-width: 82%; padding: 0.8rem 1rem;
+      font-size: 0.88rem; line-height: 1.65; border-radius: 4px;
+      position: relative; word-break: break-word;
+    }
+    .msg-row.bot .chat-bubble { background: #16161f; border: 1px solid var(--border); color: var(--white); border-bottom-left-radius: 2px; }
+    .msg-row.user .chat-bubble {
+      background: linear-gradient(135deg, #1e4a6e, #17385a);
+      border: 1px solid rgba(99,179,237,0.2); color: var(--white); border-bottom-right-radius: 2px;
+    }
+    .msg-row.user .chat-bubble::after {
+      content: ''; position: absolute; bottom: 0; right: -1px;
+      width: 8px; height: 12px;
+      background: linear-gradient(135deg, transparent 50%, #17385a 50%);
+      clip-path: polygon(0 0, 100% 0, 100% 100%);
     }
 
-    #cta-final h2 {
-      color: var(--black);
-      font-size: clamp(3rem, 6vw, 6rem);
-      margin-bottom: 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-    #cta-final p {
-      color: rgba(0,0,0,0.65);
-      font-size: 1.2rem;
-      max-width: 500px;
-      margin: 0 auto 3rem;
-      position: relative;
-      z-index: 1;
-    }
-    .cta-final-btns {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
-    }
-    .btn-dark {
-      background: var(--black);
-      color: var(--white);
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 1.1rem 2.5rem;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      transition: all 0.2s;
-      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    }
-    .btn-dark:hover { background: #1a1a1a; transform: translateY(-2px); }
+    .msg-time { font-size: 0.65rem; color: var(--muted); margin-top: 0.3rem; padding: 0 0.3rem; display: flex; align-items: center; gap: 0.35rem; }
+    .msg-row.user .msg-time { justify-content: flex-end; }
+    .tick-icon { color: var(--cyan); }
 
-    .btn-outline-dark {
-      background: transparent;
-      color: var(--black);
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 1.1rem 2.5rem;
-      border: 2px solid var(--black);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      transition: all 0.2s;
-    }
-    .btn-outline-dark:hover { background: var(--black); color: var(--white); }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--black);
-      border-top: 1px solid var(--border);
-      padding: 3rem 8vw;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.5rem;
+    .bot-row-wrap { display: flex; align-items: flex-end; gap: 0.6rem; }
+    .bot-mini-avatar {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: linear-gradient(135deg, #1a3a52, #0f2233);
+      border: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; flex-shrink: 0;
     }
 
-    .footer-logo {
-      font-family: var(--font-head);
-      font-weight: 900;
-      font-size: 1.3rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .footer-logo span { color: var(--accent); }
+    .chat-bubble a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+    .chat-bubble strong { color: var(--cyan2); font-weight: 600; }
 
-    .footer-links { display: flex; gap: 2rem; }
-    .footer-links a {
-      font-family: var(--font-head);
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
+    .typing-row { display: flex; align-items: flex-end; gap: 0.6rem; animation: msgIn 0.3s ease; }
+    .typing-bubble {
+      background: #16161f; border: 1px solid var(--border);
+      border-radius: 4px; border-bottom-left-radius: 2px;
+      padding: 0.75rem 1rem; display: flex; align-items: center; gap: 5px;
     }
-    .footer-links a:hover { color: var(--accent); }
+    .typing-dot {
+      width: 6px; height: 6px; background: var(--cyan); border-radius: 50%;
+      opacity: 0.4; animation: typePulse 1.4s ease infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typePulse { 0%,80%,100%{opacity:0.25;transform:scale(0.85)} 40%{opacity:1;transform:scale(1.1)} }
 
-    .footer-copy {
-      font-size: 0.8rem;
-      color: var(--muted);
+    .quick-replies { display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 0 1.2rem 0.8rem; animation: fadeUp 0.3s ease both; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .qr-btn {
+      background: transparent; border: 1px solid var(--border2); color: var(--cyan);
+      font-family: var(--body); font-size: 0.78rem; font-weight: 500;
+      padding: 0.4rem 0.85rem; cursor: pointer; border-radius: 20px; transition: all 0.2s; white-space: nowrap;
     }
+    .qr-btn:hover { background: rgba(99,179,237,0.08); border-color: var(--cyan); }
 
-    /* ── FLOATING WHATSAPP ── */
-    .wa-float {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: #25d366;
-      color: #fff;
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      text-decoration: none;
-      z-index: 200;
-      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.55); }
-    .wa-pulse {
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 2px solid rgba(37,211,102,0.4);
-      animation: pulse 2s ease-out infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      100% { transform: scale(1.6); opacity: 0; }
-    }
+    .input-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); flex-shrink: 0; }
 
-    /* ── MOBILE ── */
-    @media (max-width: 900px) {
-      #hero { grid-template-columns: 1fr; }
-      .hero-right { display: none; }
-      .hero-left { padding: 4rem 6vw; }
-      .hero-stats { right: 6vw; bottom: 3rem; gap: 1.5rem; }
-      .services-layout, .contact-layout, .faq-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-      .faq-cta-box { position: static; }
-      nav { display: none; }
-      footer { flex-direction: column; text-align: center; }
-      .footer-links { flex-wrap: wrap; justify-content: center; }
-      section { padding: 5rem 6vw; }
+    .chat-input-area {
+      padding: 0.9rem 1rem; background: var(--surface);
+      display: flex; align-items: flex-end; gap: 0.6rem; flex-shrink: 0;
     }
+    .input-wrapper { flex: 1; position: relative; }
+    .chat-input {
+      width: 100%; background: var(--panel); border: 1px solid var(--border);
+      color: var(--white); font-family: var(--body); font-size: 0.88rem;
+      padding: 0.7rem 1rem; outline: none; border-radius: 4px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: none; line-height: 1.5; min-height: 40px; max-height: 100px; overflow-y: auto;
+    }
+    .chat-input:focus { border-color: rgba(99,179,237,0.4); box-shadow: 0 0 0 3px rgba(99,179,237,0.06); }
+    .chat-input::placeholder { color: rgba(107,114,128,0.4); }
 
-    /* ── ANIMATIONS ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    .char-count {
+      position: absolute; bottom: 0.4rem; right: 0.7rem;
+      font-size: 0.62rem; color: var(--muted); opacity: 0; transition: opacity 0.2s; pointer-events: none;
     }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .chat-input:focus ~ .char-count { opacity: 1; }
+
+    .send-btn {
+      width: 40px; height: 40px; background: var(--cyan); border: none; border-radius: 4px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0; color: var(--bg);
+    }
+    .send-btn:hover { background: var(--cyan2); transform: scale(1.05); }
+    .send-btn:active { transform: scale(0.96); }
+    .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .send-btn svg { width: 16px; height: 16px; }
+
+    .chat-footer {
+      padding: 0.5rem 1rem; background: var(--surface); border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+      font-size: 0.65rem; color: rgba(107,114,128,0.5); flex-shrink: 0;
+    }
+    .chat-footer a { color: rgba(99,179,237,0.4); text-decoration: none; }
+    .chat-footer a:hover { color: var(--cyan); }
+
+    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 4rem 6vw 2rem; }
+
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 4rem; margin-bottom: 4rem;
+    }
+    .footer-brand p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-top: 1rem; }
+    .footer-col-title {
+      font-family: var(--head); font-weight: 700; font-size: 0.85rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem;
+    }
+    .footer-links-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-links-list a { font-size: 0.9rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links-list a:hover { color: var(--cyan); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 0.82rem; color: var(--muted); }
+
+    #cta-band {
+      background: var(--bg); border-top: 1px solid var(--border);
+      padding: 6rem 6vw; text-align: center; position: relative; z-index: 1; overflow: hidden;
+    }
+    #cta-band::before {
+      content: ''; position: absolute; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(99,179,237,0.06) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none;
+    }
+    #cta-band h2 { font-size: clamp(2.5rem,5vw,5rem); margin-bottom: 1.5rem; }
+    #cta-band p { color: var(--muted); font-size: 1.1rem; max-width: 500px; margin: 0 auto 3rem; line-height: 1.8; }
+
+    @keyframes fadeUp  { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeDown{ from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media(max-width:900px){
+      nav { display:none; }
+      .services-intro, .contact-layout, .faq-layout, .footer-top { grid-template-columns:1fr; gap:2.5rem; }
+      .services-grid, .pricing-grid, .testimonials-grid { grid-template-columns:1fr; }
+      .process-steps { grid-template-columns:1fr 1fr; }
+      .process-steps::before { display:none; }
+      .portfolio-grid { grid-template-columns:1fr; }
+      .portfolio-item:first-child { grid-row:span 1; min-height:220px; }
+      #chatbot-window { width:calc(100vw - 2rem); right:1rem; bottom:5rem; }
+      #metrics { grid-template-columns:1fr 1fr; }
+      .metric:nth-child(2) { border-right:none; }
+      section { padding:5rem 6vw; }
+      .form-row { grid-template-columns:1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo">Auto<span>Taller</span> Oviedo</div>
-    <nav>
-      <a href="#beneficios">Beneficios</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#resenas">Reseñas</a>
-      <a href="#contacto">Contacto</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <a href="tel:+34985000000" class="header-cta">☎ Llamar ahora</a>
-  </header>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-left">
-      <div class="hero-label">Taller mecánico · Oviedo</div>
-      <h1>Reparación<br>rápida y<br><em>sin líos</em></h1>
-      <p class="hero-sub">Tu coche listo en el menor tiempo posible. Presupuesto claro desde el primer momento. Sin sorpresas.</p>
-      <div class="hero-btns">
-        <a href="tel:+34985000000" class="btn-primary">📞 Llamar ahora</a>
-        <a href="https://wa.me/34985000000" class="btn-green">💬 WhatsApp</a>
-        <a href="#contacto" class="btn-outline">Pedir presupuesto</a>
+<header>
+  <a href="#" class="logo"><span>404</span> Digitals</a>
+  <nav>
+    <a href="#servicios">Servicios</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#precios">Precios</a>
+    <a href="#testimonios">Clientes</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <a href="#contacto" class="nav-cta">Empezar proyecto →</a>
+</header>
+
+<section id="hero">
+  <div class="hero-eyebrow">Soluciones Digitales · Oviedo</div>
+  <h1>
+    Tu negocio merece<br>
+    <span class="line2">presencia digital real</span>
+  </h1>
+  <p class="hero-sub">Webs que convierten, SEO que posiciona y automatizaciones con IA que ahorran tiempo. Todo lo que necesitas para crecer online.</p>
+  <div class="hero-btns">
+    <a href="#contacto" class="btn-primary">Empezar ahora →</a>
+    <a href="#servicios" class="btn-ghost">Ver servicios</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div id="metrics">
+  <div class="metric reveal"><div class="metric-num">+10</div><div class="metric-label">Proyectos entregados</div></div>
+  <div class="metric reveal"><div class="metric-num">4.8★</div><div class="metric-label">Valoración media</div></div>
+  <div class="metric reveal"><div class="metric-num">24h</div><div class="metric-label">Tiempo de respuesta</div></div>
+  <div class="metric reveal"><div class="metric-num">100%</div><div class="metric-label">Clientes satisfechos</div></div>
+</div>
+
+<section id="servicios">
+  <div class="services-intro">
+    <div>
+      <div class="section-tag">Servicios</div>
+      <h2>Lo que hacemos<br>mejor</h2>
+    </div>
+    <p>Nos especializamos en los tres pilares del crecimiento digital: una web que convierte, visibilidad en buscadores y procesos automatizados que trabajan por ti las 24 horas, todo con un enfoque práctico, resultados medibles y sin tecnicismos innecesarios.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <span class="service-icon">🌐</span>
+      <div class="service-title">Webs y Landing Pages</div>
+      <p class="service-desc">Diseño y desarrollo a medida. Cada web está pensada para convertir visitantes en clientes desde el primer segundo.</p>
+      <span class="service-tag">Desde 490€</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <span class="service-icon">📈</span>
+      <div class="service-title">SEO Local y Posicionamiento</div>
+      <p class="service-desc">Aparece en Google cuando tus clientes te buscan. Estrategia SEO enfocada en resultados medibles y duraderos.</p>
+      <span class="service-tag">Desde 69€/mes</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <span class="service-icon">🤖</span>
+      <div class="service-title">Automatizaciones e IA</div>
+      <p class="service-desc">Chatbots inteligentes, flujos automáticos y herramientas de IA que ahorran horas de trabajo manual cada semana.</p>
+      <span class="service-tag">A medida</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <span class="service-icon">🔧</span>
+      <div class="service-title">Mantenimiento Web</div>
+      <p class="service-desc">Tu web siempre actualizada, segura y optimizada. Soporte técnico incluido y actualizaciones mensuales.</p>
+      <span class="service-tag">Desde 39€/mes</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">05</div>
+      <span class="service-icon">📊</span>
+      <div class="service-title">Analítica y Conversión</div>
+      <p class="service-desc">Medimos todo lo que importa. Informes claros, tests A/B y optimización continua para mejorar tus resultados.</p>
+      <span class="service-tag">Incluido en planes</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">06</div>
+      <span class="service-icon">📱</span>
+      <div class="service-title">Redes Sociales y Contenido</div>
+      <p class="service-desc">Estrategia de contenido y gestión de redes para que tu marca tenga presencia consistente y profesional.</p>
+      <span class="service-tag">Consultar</span>
+    </div>
+  </div>
+</section>
+
+<section id="proceso">
+  <div class="section-tag">Cómo trabajamos</div>
+  <h2>Proceso claro,<br>resultados reales</h2>
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-circle">01</div>
+      <div class="step-title">Diagnóstico</div>
+      <p class="step-desc">Analizamos tu situación actual, competencia y objetivos. Primera reunión gratuita y sin compromiso.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-circle">02</div>
+      <div class="step-title">Estrategia</div>
+      <p class="step-desc">Diseñamos un plan de acción personalizado con plazos, herramientas y métricas de éxito claras.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-circle">03</div>
+      <div class="step-title">Ejecución</div>
+      <p class="step-desc">Desarrollamos e implementamos. Te mantenemos informado en cada fase con acceso a seguimiento en tiempo real.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-circle">04</div>
+      <div class="step-title">Optimización</div>
+      <p class="step-desc">Medimos resultados, ajustamos y mejoramos continuamente. El trabajo no termina con la entrega.</p>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="section-tag">Portfolio</div>
+  <h2>Proyectos recientes</h2>
+  <div class="portfolio-grid">
+    <div class="portfolio-item reveal" data-num="01">
+      <div class="portfolio-tag">Web + SEO</div>
+      <div class="portfolio-title">Clínica Dental</div>
+      <p class="portfolio-desc">Landing page de alta conversión con chatbot de citas integrado. +340% en consultas online en 3 meses.</p>
+      <a href="#contacto" class="portfolio-arrow">Saber más →</a>
+    </div>
+    <div class="portfolio-item reveal" data-num="02">
+      <div class="portfolio-tag">Automatización IA</div>
+      <div class="portfolio-title">Taller Mecánico</div>
+      <p class="portfolio-desc">Chatbot de presupuestos automáticos. Ahorra horas diarias y facilita el trabajo al equipo.</p>
+      <a href="#contacto" class="portfolio-arrow">Saber más →</a>
+    </div>
+    <div class="portfolio-item reveal" data-num="03">
+      <div class="portfolio-tag">SEO Local</div>
+      <div class="portfolio-title">Restaurante</div>
+      <p class="portfolio-desc">Top 3 en búsquedas Google en 4 meses.</p>
+      <a href="#contacto" class="portfolio-arrow">Saber más →</a>
+    </div>
+    <div class="portfolio-item reveal" data-num="04">
+      <div class="portfolio-tag">E-commerce</div>
+      <div class="portfolio-title">Tienda de Moda Local</div>
+      <p class="portfolio-desc">Tienda online completa con +200 productos y pasarela de pago integrada.</p>
+      <a href="#contacto" class="portfolio-arrow">Saber más →</a>
+    </div>
+    <div class="portfolio-item reveal" data-num="05">
+      <div class="portfolio-tag">Web + Mantenimiento</div>
+      <div class="portfolio-title">Despacho de Abogados</div>
+      <p class="portfolio-desc">Web profesional con formulario de consultas y blog SEO activo.</p>
+      <a href="#contacto" class="portfolio-arrow">Saber más →</a>
+    </div>
+  </div>
+</section>
+
+<section id="precios">
+  <div class="section-tag">Precios</div>
+  <h2>Tarifas transparentes,<br>sin sorpresas</h2>
+  <div class="pricing-grid">
+    <div class="pricing-card reveal">
+      <div class="pricing-name">Básico</div>
+      <div class="pricing-price"><span>€</span>490</div>
+      <div class="pricing-period">+ 39€/mes todo incluido</div>
+      <ul class="pricing-features">
+        <li>Landing page profesional</li>
+        <li>Diseño a medida</li>
+        <li>Responsive móvil</li>
+        <li>Formulario de contacto</li>
+        <li>Integración WhatsApp</li>
+        <li class="no">SEO avanzado</li>
+        <li class="no">Chatbot IA</li>
+        <li class="no">Mantenimiento incluido</li>
+      </ul>
+      <a href="#contacto" class="btn-pricing btn-pricing-outline">Solicitar info</a>
+    </div>
+    <div class="pricing-card featured reveal">
+      <div class="pricing-badge">Más popular</div>
+      <div class="pricing-name">Profesional</div>
+      <div class="pricing-price"><span>€</span>690</div>
+      <div class="pricing-period">+ 69€/mes mantenimiento</div>
+      <ul class="pricing-features">
+        <li>Web completa multi-sección</li>
+        <li>Diseño premium a medida</li>
+        <li>SEO local optimizado</li>
+        <li>Chatbot básico incluido</li>
+        <li>Analytics configurado</li>
+        <li>Formularios avanzados</li>
+        <li>1 mes mantenimiento gratis</li>
+        <li class="no">Automatizaciones IA</li>
+      </ul>
+      <a href="#contacto" class="btn-pricing btn-pricing-solid">Empezar ahora</a>
+    </div>
+    <div class="pricing-card reveal">
+      <div class="pricing-name">Premium</div>
+      <div class="pricing-price"><span>€</span>900</div>
+      <div class="pricing-period">+ 99€/mes todo incluido</div>
+      <ul class="pricing-features">
+        <li>Web completa avanzada</li>
+        <li>Chatbot IA personalizado</li>
+        <li>SEO + contenido mensual</li>
+        <li>Automatizaciones a medida</li>
+        <li>Informes mensuales</li>
+        <li>Soporte prioritario</li>
+        <li>Tests A/B incluidos</li>
+        <li>Optimización continua</li>
+      </ul>
+      <a href="#contacto" class="btn-pricing btn-pricing-outline">Solicitar info</a>
+    </div>
+  </div>
+</section>
+
+<section id="testimonios">
+  <div class="section-tag">Clientes</div>
+  <h2>Lo que dicen<br>de nosotros</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">Antes no aparecíamos en Google. Ahora somos los primeros cuando alguien busca nuestro sector en Asturias. El trabajo de SEO habla por sí solo.</p>
+      <div class="t-author">
+        <div class="t-avatar">LR</div>
+        <div><div class="t-name">Laura R.</div><div class="t-role">Restaurante La Sidra · Gijón</div></div>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="hero-bg-text">AUTO</div>
-      <div class="hero-car-icon">🚗</div>
-      <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-num">+800</div>
-          <div class="stat-label">Clientes</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">15+</div>
-          <div class="stat-label">Años</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">4.9⭐</div>
-          <div class="stat-label">Google</div>
-        </div>
+    <div class="testimonial-card reveal">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">La web que me hicieron es exactamente lo que necesitaba. Profesional, rápida y mis clientes siempre me la mencionan. El soporte post-entrega es excelente.</p>
+      <div class="t-author">
+        <div class="t-avatar">MS</div>
+        <div><div class="t-name">Marcos S.</div><div class="t-role">Taller AutoOviedo</div></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- BENEFICIOS -->
-  <section id="beneficios">
-    <div class="section-label">Por qué elegirnos</div>
-    <h2>Lo que ganas<br>con nosotros</h2>
-    <div class="benefits-grid">
-      <div class="benefit-card fade-up">
-        <span class="benefit-icon">⚡</span>
-        <div class="benefit-title">Atención rápida</div>
-        <p class="benefit-desc">Sin esperas innecesarias. Tu vehículo entra en taller el mismo día o al día siguiente.</p>
-      </div>
-      <div class="benefit-card fade-up">
-        <span class="benefit-icon">📋</span>
-        <div class="benefit-title">Presupuesto claro</div>
-        <p class="benefit-desc">Te informamos del coste antes de empezar. Sin sorpresas ni letras pequeñas al recoger el coche.</p>
-      </div>
-      <div class="benefit-card fade-up">
-        <span class="benefit-icon">🤝</span>
-        <div class="benefit-title">Trato profesional</div>
-        <p class="benefit-desc">Mecánicos certificados con más de 15 años de experiencia. Explicamos qué hacemos y por qué.</p>
-      </div>
-      <div class="benefit-card fade-up">
-        <span class="benefit-icon">📍</span>
-        <div class="benefit-title">Ubicación fácil</div>
-        <p class="benefit-desc">En el centro de Oviedo, con parking propio para dejar el vehículo sin problemas.</p>
-      </div>
-      <div class="benefit-card fade-up">
-        <span class="benefit-icon">🔒</span>
-        <div class="benefit-title">Confianza garantizada</div>
-        <p class="benefit-desc">Más de 800 clientes satisfechos y una valoración de 4.9 estrellas en Google.</p>
-      </div>
-      <div class="benefit-card fade-up">
-        <span class="benefit-icon">🛡️</span>
-        <div class="benefit-title">Garantía en reparaciones</div>
-        <p class="benefit-desc">Todas nuestras reparaciones llevan garantía de piezas y mano de obra por escrito.</p>
+<section id="contacto">
+  <div class="section-tag">Contacto</div>
+  <h2>Hablemos de<br>tu proyecto</h2>
+  <div class="contact-layout">
+    <div class="contact-info">
+      <h3>Empecemos con<br>una reunión gratuita</h3>
+      <p>Sin compromiso. En 30 minutos analizamos tu situación y te decimos exactamente lo que necesitas (y lo que no).</p>
+      <div class="contact-links">
+        <a href="mailto:404digitals@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉️</span>
+          <div><div class="contact-link-label">Email</div><div class="contact-link-value">404digitals@gmail.com</div></div>
+        </a>
+        <a href="https://wa.me/34654101780" class="contact-link">
+          <span class="contact-link-icon">💬</span>
+          <div><div class="contact-link-label">WhatsApp</div><div class="contact-link-value">+34 654 10 17 80</div></div>
+        </a>
+        <a href="tel:+34622203296" class="contact-link">
+          <span class="contact-link-icon">📞</span>
+          <div><div class="contact-link-label">Teléfono</div><div class="contact-link-value">+34 622 20 32 96</div></div>
+        </a>
       </div>
     </div>
-  </section>
+    <div>
+      <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-nombre">Nombre</label>
+            <input id="f-nombre" type="text" placeholder="Tu nombre" required/>
+          </div>
+          <div class="form-group">
+            <label for="f-email">Email</label>
+            <input id="f-email" type="email" placeholder="tu@email.com" required/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-telefono">Teléfono</label>
+            <input id="f-telefono" type="tel" placeholder="+34 600 000 000"/>
+          </div>
+          <div class="form-group">
+            <label for="f-servicio">Servicio</label>
+            <select id="f-servicio">
+              <option value="">¿Qué necesitas?</option>
+              <option>Web / Landing page</option>
+              <option>SEO local</option>
+              <option>Automatización / IA</option>
+              <option>Mantenimiento</option>
+              <option>Todo lo anterior</option>
+              <option>Cualquier otra</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="f-mensaje">Cuéntanos tu proyecto</label>
+          <textarea id="f-mensaje" placeholder="Describe brevemente tu negocio y qué necesitas conseguir…"></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="formBtn">Enviar mensaje →</button>
+        <div class="form-success" id="formSuccess">✅ Mensaje enviado. Te contactamos en menos de 24 horas.</div>
+        <div class="form-error" id="formError">❌ Error al enviar. Escríbenos directamente a 404digitals@gmail.com</div>
+      </form>
+    </div>
+  </div>
+</section>
 
-  <!-- SERVICIOS -->
-  <section id="servicios">
-    <div class="services-layout">
-      <div class="services-intro">
-        <div class="section-label">Qué hacemos</div>
-        <h2>Nuestros<br>servicios</h2>
-        <p>Mecánica general y especializada para todo tipo de vehículos. Trabajamos con todas las marcas y modelos, nacionales e importación.</p>
-        <a href="#contacto" class="btn-primary" style="margin-top: 1rem;">Pedir cita</a>
+<section id="faq">
+  <div class="faq-layout">
+    <div class="faq-sticky">
+      <div class="section-tag">FAQ</div>
+      <h2>Preguntas<br>frecuentes</h2>
+      <p style="color:var(--muted);font-size:0.95rem;line-height:1.8;margin-top:1.5rem;">¿Tienes dudas? Aquí respondemos las más habituales. Si no encuentras lo que buscas, escríbenos directamente.</p>
+      <a href="#contacto" class="btn-primary" style="margin-top:2rem;display:inline-flex;">Preguntarnos →</a>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Cuánto tarda en estar lista mi web?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Una landing page básica entre 5 y 7 días. Una web completa entre 2 y 3 semanas. Los plazos siempre los confirmamos por escrito antes de empezar.</div>
       </div>
-      <div class="services-grid">
-        <div class="service-item fade-up">
-          <span class="service-icon">🔧</span>
-          <div>
-            <div class="service-name">Mecánica general</div>
-            <div class="service-desc">Reparación integral de motor, transmisión y suspensión.</div>
-          </div>
-        </div>
-        <div class="service-item fade-up">
-          <span class="service-icon">🔍</span>
-          <div>
-            <div class="service-name">Diagnosis</div>
-            <div class="service-desc">Escáner electrónico para detectar cualquier avería al instante.</div>
-          </div>
-        </div>
-        <div class="service-item fade-up">
-          <span class="service-icon">📋</span>
-          <div>
-            <div class="service-name">Revisiones ITV</div>
-            <div class="service-desc">Pre-ITV y revisiones periódicas según fabricante.</div>
-          </div>
-        </div>
-        <div class="service-item fade-up">
-          <span class="service-icon">🛢️</span>
-          <div>
-            <div class="service-name">Cambio de aceite</div>
-            <div class="service-desc">Aceites de todas las viscosidades con filtros de calidad.</div>
-          </div>
-        </div>
-        <div class="service-item fade-up">
-          <span class="service-icon">🛑</span>
-          <div>
-            <div class="service-name">Frenos</div>
-            <div class="service-desc">Pastillas, discos, líquido de frenos y ABS.</div>
-          </div>
-        </div>
-        <div class="service-item fade-up">
-          <span class="service-icon">🔄</span>
-          <div>
-            <div class="service-name">Neumáticos</div>
-            <div class="service-desc">Montaje, equilibrado, alineación y permuta de temporada.</div>
-          </div>
-        </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Necesito tener textos e imágenes listos?<span class="faq-icon">+</span></div>
+        <div class="faq-a">No es necesario. Si no tienes fotos, trabajamos con bancos de imágenes privados y profesionales.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Qué incluye el mantenimiento mensual?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Actualizaciones de seguridad, copias de seguridad semanales, monitorización de disponibilidad, soporte técnico por email y WhatsApp, y pequeños cambios de contenido sin coste adicional.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿El chatbot entiende preguntas de mis clientes reales?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Sí. Lo entrenamos con la información de tu negocio: precios, servicios, horarios, preguntas frecuentes. Responde con lenguaje natural y puede redirigir a WhatsApp o reserva cuando lo necesite.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Cuándo empiezo a ver resultados de SEO?<span class="faq-icon">+</span></div>
+        <div class="faq-a">El SEO local suele mostrar resultados visibles entre 2 y 4 meses. Es una inversión a medio plazo, pero los resultados son duraderos y se acumulan con el tiempo.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Trabajáis solo en Oviedo o en toda España?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Trabajamos con clientes de toda España. Nuestras reuniones son por llamada y toda la gestión es 100% online.</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- RESEÑAS -->
-  <section id="resenas">
-    <div class="section-label">Lo que dicen</div>
-    <h2>Clientes<br>satisfechos</h2>
-    <div class="reviews-grid">
-      <div class="review-card fade-up">
-        <div class="review-quote">"</div>
-        <div class="stars">★★★★★</div>
-        <p class="review-text">Llevé el coche con un problema en el motor que otro taller no supo detectar. En AutoTaller lo encontraron en menos de una hora y me lo entregaron al día siguiente. Precio justo y sin sorpresas.</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">CM</div>
-          <div>
-            <div class="reviewer-name">Carlos M.</div>
-            <div class="reviewer-date">Hace 2 semanas · Google</div>
-          </div>
-        </div>
+<section id="cta-band">
+  <h2>¿Listo para<br>dar el salto?</h2>
+  <p>Primera consulta gratuita. Sin compromiso. Te decimos exactamente qué necesita tu negocio.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="#contacto" class="btn-primary" style="font-size:1.05rem;padding:1rem 2.5rem;">Empezar proyecto →</a>
+    <a href="https://wa.me/34654101780" class="btn-ghost" style="font-size:1.05rem;padding:1rem 2.5rem;">💬 WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo"><span>404</span> Digitals</div>
+      <p>Soluciones digitales para negocios que quieren crecer online. Webs, SEO y automatizaciones con IA.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Servicios</div>
+      <ul class="footer-links-list">
+        <li><a href="#servicios">Webs y Landing Pages</a></li>
+        <li><a href="#servicios">SEO Local</a></li>
+        <li><a href="#servicios">Automatizaciones IA</a></li>
+        <li><a href="#servicios">Mantenimiento</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Empresa</div>
+      <ul class="footer-links-list">
+        <li><a href="#proceso">Proceso</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#testimonios">Clientes</a></li>
+        <li><a href="#precios">Precios</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contacto</div>
+      <ul class="footer-links-list">
+        <li><a href="mailto:404digitals@gmail.com">404digitals@gmail.com</a></li>
+        <li><a href="tel:+34622203296">+34 622 20 32 96</a></li>
+        <li><a href="https://wa.me/34654101780">WhatsApp</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 404 Digitals · Todos los derechos reservados</div>
+    <div class="footer-copy">Hecho con ☕ en Oviedo, Asturias</div>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<button id="chatbot-btn" onclick="toggleChat()" title="Hablar con el asistente" aria-label="Abrir chat">
+  <div class="btn-ring"></div>
+  <div class="btn-ring"></div>
+  <div class="notif-dot" id="notifDot"></div>
+  <svg id="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+  </svg>
+  <svg id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+</button>
+
+<div id="chatbot-window" role="dialog" aria-label="Chat con 404 Digitals">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar-wrap">
+        <div class="chat-avatar">🤖</div>
+        <div class="online-dot"></div>
       </div>
-      <div class="review-card fade-up">
-        <div class="review-quote">"</div>
-        <div class="stars">★★★★★</div>
-        <p class="review-text">Llevo 5 años trayendo aquí todos mis coches. El trato es excelente, siempre te explican qué van a hacer y el presupuesto es transparente. No se puede pedir más a un taller.</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">LG</div>
-          <div>
-            <div class="reviewer-name">Laura G.</div>
-            <div class="reviewer-date">Hace 1 mes · Google</div>
-          </div>
-        </div>
-      </div>
-      <div class="review-card fade-up">
-        <div class="review-quote">"</div>
-        <div class="stars">★★★★★</div>
-        <p class="review-text">Fui a cambiar los frenos pensando que me iban a cobrar una fortuna y salí muy gratamente sorprendido. Rápidos, profesionales y honestos. Sin duda el mejor taller de Oviedo.</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">AR</div>
-          <div>
-            <div class="reviewer-name">Alejandro R.</div>
-            <div class="reviewer-date">Hace 3 semanas · Google</div>
-          </div>
-        </div>
+      <div class="chat-info">
+        <div class="chat-name">404 Assistant</div>
+        <div class="chat-status">En línea · IA activa</div>
       </div>
     </div>
-    <div class="google-badge">
-      <span class="google-dot"></span>
-      4.9 / 5 en Google · +120 reseñas verificadas
+    <div class="chat-header-right">
+      <button class="chat-action-btn" onclick="clearChat()" title="Nueva conversación">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
+        </svg>
+      </button>
+      <button class="chat-action-btn" onclick="toggleChat()" title="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
     </div>
-  </section>
-
-  <!-- MAPA + CONTACTO -->
-  <section id="contacto">
-    <div class="section-label">Dónde estamos</div>
-    <h2>Ven a vernos</h2>
-    <div class="contact-layout">
-      <div class="contact-info">
-        <div class="contact-item">
-          <span class="contact-icon">📍</span>
-          <div>
-            <div class="contact-label">Dirección</div>
-            <div class="contact-value">Calle Independencia, 14</div>
-            <div class="contact-sub">33004 Oviedo, Asturias</div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <span class="contact-icon">📞</span>
-          <div>
-            <div class="contact-label">Teléfono</div>
-            <div class="contact-value"><a href="tel:+34985000000" style="color:inherit;text-decoration:none;">985 000 000</a></div>
-            <div class="contact-sub">Llamadas y WhatsApp</div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <span class="contact-icon">🕐</span>
-          <div>
-            <div class="contact-label">Horario</div>
-            <div class="contact-value">Lun–Vie: 8:30 – 19:00</div>
-            <div class="contact-sub">Sábados: 9:00 – 13:00 · Domingos cerrado</div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <span class="contact-icon">✉️</span>
-          <div>
-            <div class="contact-label">Email</div>
-            <div class="contact-value">info@autotalleroviedo.es</div>
-            <div class="contact-sub">Respondemos en menos de 2 horas</div>
-          </div>
-        </div>
-        <a href="https://wa.me/34985000000?text=Hola,%20quiero%20pedir%20presupuesto" class="btn-green" style="width:100%;justify-content:center;margin-top:0.5rem;">💬 Escribir por WhatsApp</a>
-      </div>
-      <div class="map-container">
-        <div class="fake-map"></div>
-        <div class="map-pin">📍</div>
-        <div class="map-label">AutoTaller Oviedo · C/ Independencia 14</div>
-      </div>
+  </div>
+  <div class="chat-context-bar">
+    <div class="ctx-chip active">
+      <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+      IA · Claude Sonnet
     </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq">
-    <div class="faq-layout">
-      <div>
-        <div class="section-label">Dudas frecuentes</div>
-        <h2>FAQ</h2>
-        <div class="faq-list">
-          <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">
-              ¿Cuál es vuestro horario?
-              <span class="faq-arrow">+</span>
-            </div>
-            <div class="faq-a">Abrimos de lunes a viernes de 8:30 a 19:00 h sin cerrar al mediodía. Los sábados de 9:00 a 13:00 h. Los domingos y festivos estamos cerrados.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">
-              ¿Necesito cita previa?
-              <span class="faq-arrow">+</span>
-            </div>
-            <div class="faq-a">Para la mayoría de servicios recomendamos cita previa para asegurarte plaza, aunque admitimos urgencias sin cita. Puedes reservar por teléfono o WhatsApp en menos de un minuto.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">
-              ¿El presupuesto es gratuito?
-              <span class="faq-arrow">+</span>
-            </div>
-            <div class="faq-a">Sí, el presupuesto es completamente gratuito y sin compromiso. Te lo entregamos por escrito antes de empezar cualquier reparación.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">
-              ¿Dónde estáis exactamente?
-              <span class="faq-arrow">+</span>
-            </div>
-            <div class="faq-a">Estamos en Calle Independencia 14, Oviedo. Tenemos parking propio para dejar el vehículo. A 5 minutos a pie del centro y con parada de bus justo enfrente.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">
-              ¿Trabajáis con todas las marcas?
-              <span class="faq-arrow">+</span>
-            </div>
-            <div class="faq-a">Sí, trabajamos con todos los vehículos: marcas nacionales, europeas y asiáticas. Tanto gasolina, diésel como híbridos. Sin restricciones de marca ni modelo.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">
-              ¿Cuánto tarda una reparación normal?
-              <span class="faq-arrow">+</span>
-            </div>
-            <div class="faq-a">Depende de la reparación, pero la mayoría de intervenciones se resuelven en el mismo día. Para reparaciones más complejas te avisamos con antelación y te damos fecha exacta.</div>
-          </div>
-        </div>
-      </div>
-      <div class="faq-cta-box">
-        <h3>¿Tienes más<br>preguntas?</h3>
-        <p>Escríbenos por WhatsApp o llámanos directamente. Te respondemos en el momento, sin bots ni esperas.</p>
-        <a href="https://wa.me/34985000000" class="btn-primary" style="width:100%;justify-content:center;">💬 Preguntar por WhatsApp</a>
-        <a href="tel:+34985000000" class="btn-outline" style="width:100%;justify-content:center;margin-top:1rem;">📞 Llamar ahora</a>
-        <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);">
-          <div style="font-family:var(--font-head);font-weight:700;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">También estamos en</div>
-          <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-            <span style="font-size:1.5rem;" title="Google">🔍</span>
-            <span style="font-size:1.5rem;" title="Instagram">📸</span>
-            <span style="font-size:1.5rem;" title="Facebook">👍</span>
-          </div>
-        </div>
-      </div>
+    <div class="ctx-chip">🌐 Web & SEO</div>
+    <div class="ctx-chip">🤖 IA & Automatización</div>
+    <div class="ctx-chip">💬 Español</div>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="date-divider">Hoy</div>
+  </div>
+  <div class="quick-replies" id="quickReplies"></div>
+  <div class="input-divider"></div>
+  <div class="chat-input-area">
+    <div class="input-wrapper">
+      <textarea class="chat-input" id="chatInput" placeholder="Escribe tu pregunta…" rows="1" maxlength="500"
+        onkeydown="handleKey(event)" oninput="autoResize(this);updateCharCount(this)" aria-label="Mensaje"></textarea>
+      <span class="char-count" id="charCount">0/500</span>
     </div>
-  </section>
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Enviar" aria-label="Enviar mensaje">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+  <div class="chat-footer">Impulsado por IA · <a href="https://404digitals.es" target="_blank">404 Digitals</a></div>
+</div>
 
-  <!-- CTA FINAL -->
-  <section id="cta-final">
-    <h2>Pide tu<br>presupuesto hoy</h2>
-    <p>Sin esperas, sin letra pequeña. Tu coche en las mejores manos de Oviedo.</p>
-    <div class="cta-final-btns">
-      <a href="tel:+34985000000" class="btn-dark">📞 Llamar ahora</a>
-      <a href="https://wa.me/34985000000" class="btn-outline-dark">💬 WhatsApp</a>
-    </div>
-  </section>
+<script>
+  // ── CURSOR ──
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursor-ring');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx-5+'px'; cursor.style.top = my-5+'px';
+  });
+  (function animRing(){
+    rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
+    ring.style.left = rx-18+'px'; ring.style.top = ry-18+'px';
+    requestAnimationFrame(animRing);
+  })();
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">Auto<span>Taller</span> Oviedo</div>
-    <div class="footer-links">
-      <a href="#beneficios">Beneficios</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#resenas">Reseñas</a>
-      <a href="#contacto">Contacto</a>
-      <a href="#faq">FAQ</a>
-    </div>
-    <div class="footer-copy">© 2025 AutoTaller Oviedo · Todos los derechos reservados</div>
-  </footer>
+  // ── SCROLL REVEAL ──
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'), (i%4)*80); });
+  }, {threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  <!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/34985000000" class="wa-float" title="WhatsApp">
-    <div class="wa-pulse"></div>
-    💬
-  </a>
+  // ── HEADER SCROLL ──
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    header.style.background = window.scrollY > 60 ? 'rgba(5,5,8,0.97)' : 'rgba(5,5,8,0.85)';
+  });
 
-  <script>
-    // FAQ toggle
-    function toggleFaq(el) {
-      const item = el.parentElement;
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    }
+  // ── COUNTER ANIMATION ──
+  const metricsObs = new IntersectionObserver(entries => {
+    if (!entries[0].isIntersecting) return;
+    metricsObs.disconnect();
+    document.querySelectorAll('.metric-num').forEach(el => {
+      const txt = el.textContent;
+      const num = parseFloat(txt.replace(/[^0-9.]/g,''));
+      if (!num) return;
+      const suffix = txt.replace(/[0-9.]/g,'');
+      let s = 0, step = num/60;
+      const t = setInterval(() => {
+        s = Math.min(s+step, num);
+        el.textContent = (Number.isInteger(num) ? Math.floor(s) : s.toFixed(1)) + suffix;
+        if (s >= num) clearInterval(t);
+      }, 16);
+    });
+  }, {threshold:0.5});
+  metricsObs.observe(document.getElementById('metrics'));
 
-    // Scroll fade-up animation
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, entry.target.dataset.delay || 0);
-        }
+  // ── FAQ ──
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!open) item.classList.add('open');
+  }
+
+  // ── FORMULARIO → MAKE → GOOGLE SHEETS ──
+  const WEBHOOK = 'https://hook.eu1.make.com/xw948jodsm422lcm61mgg3qlyleuqek5';
+
+  async function submitForm(e) {
+    e.preventDefault();
+    const btn     = document.getElementById('formBtn');
+    const success = document.getElementById('formSuccess');
+    const error   = document.getElementById('formError');
+
+    btn.textContent = 'Enviando…';
+    btn.disabled = true;
+    success.style.display = 'none';
+    error.style.display   = 'none';
+
+    const payload = {
+      nombre:    document.getElementById('f-nombre').value.trim(),
+      email:     document.getElementById('f-email').value.trim(),
+      telefono:  document.getElementById('f-telefono').value.trim(),
+      servicio:  document.getElementById('f-servicio').value,
+      mensaje:   document.getElementById('f-mensaje').value.trim(),
+      timestamp: new Date().toLocaleString('es-ES')
+    };
+
+    try {
+      const res = await fetch(WEBHOOK, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload)
       });
-    }, { threshold: 0.12 });
 
-    document.querySelectorAll('.fade-up').forEach((el, i) => {
-      el.dataset.delay = (i % 4) * 100;
-      observer.observe(el);
-    });
+      if (res.ok) {
+        success.style.display = 'block';
+        document.getElementById('contactForm').reset();
+      } else {
+        throw new Error('HTTP ' + res.status);
+      }
+    } catch (err) {
+      console.error('Webhook error:', err);
+      error.style.display = 'block';
+    } finally {
+      btn.textContent = 'Enviar mensaje →';
+      btn.disabled = false;
+    }
+  }
 
-    // Header scroll effect
-    const header = document.querySelector('header');
-    window.addEventListener('scroll', () => {
-      header.style.borderBottomColor = window.scrollY > 50
-        ? 'rgba(245,166,35,0.2)'
-        : 'var(--border)';
+  // ── CHATBOT ──
+  let chatOpen  = false;
+  let isLoading = false;
+  let msgHistory = [];
+
+  const SYSTEM_PROMPT = `Eres el asistente virtual de 404 Digitals, una agencia de soluciones digitales con sede en Oviedo, Asturias.
+
+INFORMACIÓN:
+- Email: 404digitals@gmail.com · WhatsApp: +34 654 10 17 80 · Teléfono: +34 622 20 32 96
+- Proyectos: +10 · Valoración: 4.8★ · Respuesta: en menos de 24h
+
+PLANES:
+- Básico: 490€ + 39€/mes → Landing page, diseño a medida, responsive, formulario, WhatsApp
+- Profesional (más popular): 690€ + 69€/mes → Web multi-sección, SEO local, chatbot básico, analytics, 1 mes mantenimiento gratis
+- Premium: 900€ + 99€/mes → Web avanzada, chatbot IA, SEO + contenido, automatizaciones, soporte prioritario, tests A/B
+
+SERVICIOS: Webs desde 490€ · SEO desde 69€/mes · Automatización IA a medida · Mantenimiento desde 39€/mes
+
+PLAZOS: Landing 5-7 días · Web completa 2-3 semanas · SEO resultados 2-4 meses
+
+INSTRUCCIONES: Responde en español, tono cercano. Máximo 3-4 líneas. Una pregunta por turno. Usa **negrita** para precios. No inventes datos.`;
+
+  const INITIAL_QR = ["💰 Ver precios","🌐 Quiero una web","📈 ¿Cómo funciona el SEO?","🤖 Automatización","📞 Hablar con alguien"];
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      addBotMsg("¡Hola! 👋 Soy el asistente de **404 Digitals**.\n\nEstoy aquí para resolver tus dudas sobre servicios, precios y presencia digital. ¿En qué puedo ayudarte?");
+      showQR(INITIAL_QR);
+    }, 600);
+  });
+
+  function toggleChat() {
+    chatOpen = !chatOpen;
+    document.getElementById('chatbot-window').classList.toggle('open', chatOpen);
+    document.getElementById('chatbot-btn').classList.toggle('open', chatOpen);
+    document.getElementById('icon-chat').style.display  = chatOpen ? 'none'  : 'block';
+    document.getElementById('icon-close').style.display = chatOpen ? 'block' : 'none';
+    const notif = document.getElementById('notifDot');
+    if (chatOpen) {
+      if (notif) notif.remove();
+      setTimeout(() => document.getElementById('chatInput').focus(), 350);
+    }
+  }
+
+  function getTime() {
+    return new Date().toLocaleTimeString('es-ES', {hour:'2-digit',minute:'2-digit'});
+  }
+
+  function fmt(t) {
+    return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p style="margin-top:0.5rem">').replace(/\n/g,'<br>');
+  }
+
+  function addBotMsg(text) {
+    const c = document.getElementById('chatMessages');
+    const row = document.createElement('div'); row.className = 'msg-row bot';
+    const wrap = document.createElement('div'); wrap.className = 'bot-row-wrap';
+    const av = document.createElement('div'); av.className = 'bot-mini-avatar'; av.textContent = '🤖';
+    const col = document.createElement('div'); col.style.cssText = 'display:flex;flex-direction:column';
+    const b = document.createElement('div'); b.className = 'chat-bubble'; b.innerHTML = fmt(text);
+    const t = document.createElement('div'); t.className = 'msg-time'; t.textContent = getTime();
+    col.append(b,t); wrap.append(av,col); row.appendChild(wrap); c.appendChild(row);
+    c.scrollTop = c.scrollHeight;
+  }
+
+  function addUserMsg(text) {
+    const c = document.getElementById('chatMessages');
+    clearQR();
+    const row = document.createElement('div'); row.className = 'msg-row user';
+    const b = document.createElement('div'); b.className = 'chat-bubble'; b.textContent = text;
+    const t = document.createElement('div'); t.className = 'msg-time';
+    t.innerHTML = getTime() + ' <span class="tick-icon">✓✓</span>';
+    row.append(b,t); c.appendChild(row);
+    c.scrollTop = c.scrollHeight;
+  }
+
+  function showTyping() {
+    const c = document.getElementById('chatMessages');
+    const row = document.createElement('div'); row.className = 'typing-row'; row.id = 'typingIndicator';
+    const av = document.createElement('div'); av.className = 'bot-mini-avatar'; av.textContent = '🤖';
+    const b = document.createElement('div'); b.className = 'typing-bubble';
+    b.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
+    row.append(av,b); c.appendChild(row); c.scrollTop = c.scrollHeight;
+  }
+
+  function hideTyping() { const t = document.getElementById('typingIndicator'); if(t) t.remove(); }
+
+  function showQR(list) {
+    const c = document.getElementById('quickReplies'); c.innerHTML = '';
+    list.forEach(txt => {
+      const b = document.createElement('button'); b.className = 'qr-btn'; b.textContent = txt;
+      b.onclick = () => sendMessage(txt); c.appendChild(b);
     });
-  </script>
+  }
+  function clearQR() { document.getElementById('quickReplies').innerHTML = ''; }
+
+  function handleKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();} }
+  function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; }
+  function updateCharCount(el) { document.getElementById('charCount').textContent=el.value.length+'/500'; }
+
+  async function sendMessage(override) {
+    if (isLoading) return;
+    const inp = document.getElementById('chatInput');
+    const txt = (override || inp.value).trim();
+    if (!txt) return;
+    inp.value = ''; inp.style.height = 'auto';
+    document.getElementById('charCount').textContent = '0/500';
+    addUserMsg(txt);
+    msgHistory.push({role:'user', content:txt});
+    isLoading = true;
+    document.getElementById('sendBtn').disabled = true;
+    await new Promise(r => setTimeout(r, 700 + Math.random()*600));
+    showTyping();
+    await new Promise(r => setTimeout(r, 400));
+    hideTyping();
+    const reply = getBotReply(txt);
+    addBotMsg(reply);
+    msgHistory.push({role:'assistant', content:reply});
+    showQR(getFollowUps(txt.toLowerCase()));
+    isLoading = false;
+    document.getElementById('sendBtn').disabled = false;
+    document.getElementById('chatInput').focus();
+  }
+
+  function getBotReply(msg) {
+    const m = msg.toLowerCase();
+    if (m.includes('precio')||m.includes('cuesta')||m.includes('cuánto')||m.includes('cuanto')||m.includes('€')||m.includes('tarifa'))
+      return "Nuestros planes:\n\n• **Landing page**: desde **490€ + 39€/mes**\n• **Web completa**: desde **690€ + 69€/mes**\n• **SEO local**: desde **69€/mes**\n• **Mantenimiento**: desde **39€/mes**\n\nEl más solicitado es el plan Profesional. ¿Te interesa alguno?";
+    if (m.includes('web')||m.includes('página')||m.includes('landing')||m.includes('diseño'))
+      return "Hacemos webs a medida:\n\n✓ Diseño personalizado\n✓ Responsive (móvil/tablet)\n✓ SEO básico incluido\n✓ Formulario + WhatsApp integrado\n\nDesde **490€**. ¿Para qué tipo de negocio es?";
+    if (m.includes('seo')||m.includes('google')||m.includes('posicion'))
+      return "SEO Local:\n\n✓ Posicionamiento en Google Maps\n✓ Palabras clave de tu zona\n✓ Google Business optimizado\n✓ Informe mensual de resultados\n\nDesde **69€/mes**. Resultados visibles en 2-4 meses. ¿Te interesa?";
+    if (m.includes('chatbot')||m.includes('automatiz')||m.includes('bot')||m.includes('ia'))
+      return "Automatizaciones con IA:\n\n✓ Chatbots que responden 24/7\n✓ Presupuestos automáticos\n✓ Captación de leads\n✓ Integración con WhatsApp\n\nPrecio a medida según el proyecto. ¿Qué proceso quieres automatizar?";
+    if (m.includes('contact')||m.includes('hablar')||m.includes('llamar')||m.includes('reunión'))
+      return "Puedes contactarnos por:\n\n✉️ **404digitals@gmail.com**\n💬 **WhatsApp**: +34 654 10 17 80\n📞 **Teléfono**: +34 622 20 32 96\n\nRespondemos en menos de 24h. ¿Prefieres que te llamemos nosotros?";
+    if (m.includes('tarda')||m.includes('plazo')||m.includes('tiempo')||m.includes('semana'))
+      return "Nuestros plazos:\n\n⚡ Landing page: **5-7 días**\n🚀 Web completa: **2-3 semanas**\n📈 SEO (primeros resultados): **2-4 meses**\n\n¿Tienes una fecha límite en mente?";
+    if (m.includes('portfolio')||m.includes('proyecto')||m.includes('ejemplo')||m.includes('trabajo'))
+      return "Algunos proyectos recientes:\n\n🦷 Clínica Dental → **+340% consultas online**\n🔧 Taller Mecánico → chatbot de presupuestos automáticos\n🍽️ Restaurante → **Top 3 Google** en 4 meses\n👗 Tienda de moda → e-commerce 200+ productos\n\n¿De qué sector es tu negocio?";
+    if (m.includes('hola')||m.includes('buenos')||m.includes('buenas')||m.includes('hey'))
+      return "¡Hola! 👋 ¿En qué puedo ayudarte hoy?";
+    if (m.includes('gracias'))
+      return "¡De nada! 😊 ¿Hay algo más en lo que pueda ayudarte?";
+    return "Cuéntame más sobre tu negocio y lo que necesitas. Así puedo orientarte mejor. 😊";
+  }
+
+  function getFollowUps(m) {
+    if (m.includes('precio')||m.includes('€')||m.includes('plan')) return ['🔥 Plan Profesional','💎 Plan Premium','📅 Reunión gratuita'];
+    if (m.includes('seo')||m.includes('google')) return ['⏱️ ¿Cuándo veré resultados?','💰 ¿Cuánto cuesta?','📞 Hablar con alguien'];
+    if (m.includes('web')||m.includes('landing')) return ['⏱️ ¿Cuánto tarda?','🖼️ Ver portfolio','💰 Ver precios'];
+    if (m.includes('chatbot')||m.includes('ia')||m.includes('automatiz')) return ['💰 ¿Cuánto cuesta?','📋 Ver ejemplos','📞 Hablar con alguien'];
+    if (m.includes('contact')||m.includes('hablar')) return ['✉️ Email','💬 WhatsApp','📞 Llamar'];
+    return ['💰 Ver precios','📅 Reunión gratuita','🌐 Quiero una web'];
+  }
+
+  function clearChat() {
+    msgHistory = [];
+    document.getElementById('chatMessages').innerHTML = '<div class="date-divider">Hoy</div>';
+    clearQR();
+    setTimeout(() => {
+      addBotMsg("Conversación reiniciada. ¿En qué puedo ayudarte? 😊");
+      showQR(INITIAL_QR);
+    }, 200);
+  }
+</script>
 </body>
 </html>
