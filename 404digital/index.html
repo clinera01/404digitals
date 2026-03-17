@@ -1169,73 +1169,100 @@
     <div class="contact-info">
       <h3>Empecemos con<br>una reunión gratuita</h3>
       <p>Sin compromiso. En 30 minutos analizamos tu situación y te decimos exactamente lo que necesitas (y lo que no).</p>
+
       <div class="contact-links">
         <a href="mailto:404digitals@gmail.com" class="contact-link">
           <span class="contact-link-icon">✉️</span>
-          <div><div class="contact-link-label">Email</div><div class="contact-link-value">404digitals@gmail.com</div></div>
+          <div>
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-value">404digitals@gmail.com</div>
+          </div>
         </a>
-        <a href="https://wa.me/34654101780" class="contact-link">
+
+        <a href="https://wa.me/34654101780" class="contact-link" target="_blank" rel="noopener noreferrer">
           <span class="contact-link-icon">💬</span>
-          <div><div class="contact-link-label">WhatsApp</div><div class="contact-link-value">+34 654 10 17 80</div></div>
+          <div>
+            <div class="contact-link-label">WhatsApp</div>
+            <div class="contact-link-value">+34 654 10 17 80</div>
+          </div>
         </a>
+
         <a href="tel:+34622203296" class="contact-link">
           <span class="contact-link-icon">📞</span>
-          <div><div class="contact-link-label">Teléfono</div><div class="contact-link-value">+34 622 20 32 96</div></div>
+          <div>
+            <div class="contact-link-label">Teléfono</div>
+            <div class="contact-link-value">+34 622 20 32 96</div>
+          </div>
         </a>
       </div>
     </div>
+
     <div>
-<form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
-  <div class="form-row">
-    <div class="form-group">
-      <label for="f-nombre">Nombre</label>
-      <input id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" required />
-    </div>
-    <div class="form-group">
-      <label for="f-apellidos">Apellidos</label>
-      <input id="f-apellidos" name="apellidos" type="text" placeholder="Tus apellidos" required />
-    </div>
-  </div>
+      <form class="contact-form" id="contactForm" onsubmit="submitForm(event)" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-nombre">Nombre</label>
+            <input id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" required />
+          </div>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label for="f-email">Email</label>
-      <input id="f-email" name="email" type="email" placeholder="tu@email.com" required />
-    </div>
-    <div class="form-group">
-      <label for="f-telefono">Teléfono</label>
-      <input id="f-telefono" name="telefono" type="tel" placeholder="+34 600 000 000" />
-    </div>
-  </div>
+          <div class="form-group">
+            <label for="f-apellidos">Apellidos</label>
+            <input id="f-apellidos" name="apellidos" type="text" placeholder="Tus apellidos" required />
+          </div>
+        </div>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label for="f-empresa">Empresa</label>
-      <input id="f-empresa" name="empresa" type="text" placeholder="Nombre de tu empresa" />
-    </div>
-    <div class="form-group">
-      <label for="f-servicio">Servicio</label>
-      <select id="f-servicio" name="servicio" required>
-        <option value="">¿Qué necesitas?</option>
-        <option value="Web / Landing page">Web / Landing page</option>
-        <option value="SEO local">SEO local</option>
-        <option value="Automatización / IA">Automatización / IA</option>
-        <option value="Mantenimiento">Mantenimiento</option>
-        <option value="Todo lo anterior">Todo lo anterior</option>
-        <option value="Otro">Otro</option>
-      </select>
-    </div>
-  </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" placeholder="tu@email.com" required />
+          </div>
 
-  <div class="form-group">
-    <label for="f-mensaje">Cuéntanos tu proyecto</label>
-    <textarea id="f-mensaje" name="mensaje" placeholder="Describe brevemente tu negocio y qué necesitas conseguir…" required></textarea>
-  </div>
+          <div class="form-group">
+            <label for="f-telefono">Teléfono</label>
+            <input id="f-telefono" name="telefono" type="tel" placeholder="+34 600 000 000" />
+          </div>
+        </div>
 
-  <button type="submit" class="form-submit" id="formBtn">Enviar mensaje →</button>
-  <div class="form-success" id="formSuccess">✅ Mensaje enviado. Te contactamos en menos de 24 horas.</div>
-  <div class="form-error" id="formError">❌ Error al enviar. Escríbenos directamente a 404digitals@gmail.com</div>
-</form>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-empresa">Empresa</label>
+            <input id="f-empresa" name="empresa" type="text" placeholder="Nombre de tu empresa" />
+          </div>
+
+          <div class="form-group">
+            <label for="f-servicio">Servicio</label>
+            <select id="f-servicio" name="servicio" required>
+              <option value="">¿Qué necesitas?</option>
+              <option value="Web / Landing page">Web / Landing page</option>
+              <option value="SEO local">SEO local</option>
+              <option value="Automatización / IA">Automatización / IA</option>
+              <option value="Mantenimiento">Mantenimiento</option>
+              <option value="Todo lo anterior">Todo lo anterior</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="f-mensaje">Cuéntanos tu proyecto</label>
+          <textarea
+            id="f-mensaje"
+            name="mensaje"
+            placeholder="Describe brevemente tu negocio y qué necesitas conseguir…"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" class="form-submit" id="formBtn">Enviar mensaje →</button>
+
+        <div class="form-success" id="formSuccess">
+          ✅ Mensaje enviado. Te contactamos en menos de 24 horas.
+        </div>
+
+        <div class="form-error" id="formError">
+          ❌ Error al enviar. Revisa Make, el webhook y que el escenario esté en “Run once” o activado.
+        </div>
+      </form>
     </div>
   </div>
 </section>
@@ -1395,17 +1422,20 @@
 
 <script>
   // ── WEBHOOK Make.com ──────────────────────────────────────────────
-  const WEBHOOK = 'https://hook.eu1.make.com/qjuob4irpdqlz9726wam65ck9n2u9dr9';
+  const WEBHOOK = "https://hook.eu1.make.com/qjuob4irpdqlz9726wam65ck9n2u9dr9";
 
   // ── CURSOR ───────────────────────────────────────────────────────
   const cursor = document.getElementById('cursor');
   const ring   = document.getElementById('cursor-ring');
   let mx = 0, my = 0, rx = 0, ry = 0;
+
   document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
+    mx = e.clientX;
+    my = e.clientY;
     cursor.style.left = mx - 5 + 'px';
     cursor.style.top  = my - 5 + 'px';
   });
+
   (function animRing() {
     rx += (mx - rx) * 0.12;
     ry += (my - ry) * 0.12;
@@ -1417,9 +1447,12 @@
   // ── SCROLL REVEAL ────────────────────────────────────────────────
   const revealObs = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
-      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), (i % 4) * 80);
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), (i % 4) * 80);
+      }
     });
   }, { threshold: 0.1 });
+
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
   // ── HEADER SCROLL ────────────────────────────────────────────────
@@ -1434,12 +1467,16 @@
   const metricsObs = new IntersectionObserver(entries => {
     if (!entries[0].isIntersecting) return;
     metricsObs.disconnect();
+
     document.querySelectorAll('.metric-num').forEach(el => {
-      const txt    = el.textContent;
-      const num    = parseFloat(txt.replace(/[^0-9.]/g, ''));
+      const txt = el.textContent;
+      const num = parseFloat(txt.replace(/[^0-9.]/g, ''));
       if (!num) return;
+
       const suffix = txt.replace(/[0-9.]/g, '');
-      let s = 0, step = num / 60;
+      let s = 0;
+      const step = num / 60;
+
       const t = setInterval(() => {
         s = Math.min(s + step, num);
         el.textContent = (Number.isInteger(num) ? Math.floor(s) : s.toFixed(1)) + suffix;
@@ -1447,6 +1484,7 @@
       }, 16);
     });
   }, { threshold: 0.5 });
+
   metricsObs.observe(document.getElementById('metrics'));
 
   // ── FAQ ──────────────────────────────────────────────────────────
@@ -1458,50 +1496,70 @@
   }
 
   // ── FORMULARIO → MAKE WEBHOOK ────────────────────────────────────
-async function submitForm(e) {
-  e.preventDefault();
+  async function submitForm(e) {
+    e.preventDefault();
 
-  const btn = document.getElementById("formBtn");
-  const success = document.getElementById("formSuccess");
-  const error = document.getElementById("formError");
-  const form = document.getElementById("contactForm");
+    const form = document.getElementById("contactForm");
+    const btn = document.getElementById("formBtn");
+    const success = document.getElementById("formSuccess");
+    const error = document.getElementById("formError");
 
-  success.style.display = "none";
-  error.style.display = "none";
-  btn.disabled = true;
-  btn.textContent = "Enviando…";
+    success.style.display = "none";
+    error.style.display = "none";
 
-  const formData = new FormData();
-  formData.append("nombre", document.getElementById("f-nombre").value.trim());
-  formData.append("apellidos", document.getElementById("f-apellidos").value.trim());
-  formData.append("email", document.getElementById("f-email").value.trim());
-  formData.append("telefono", document.getElementById("f-telefono").value.trim());
-  formData.append("empresa", document.getElementById("f-empresa").value.trim());
-  formData.append("servicio", document.getElementById("f-servicio").value);
-  formData.append("mensaje", document.getElementById("f-mensaje").value.trim());
-  formData.append("origen", window.location.href);
-  formData.append("fecha_envio", new Date().toISOString());
+    const nombre = document.getElementById("f-nombre").value.trim();
+    const apellidos = document.getElementById("f-apellidos").value.trim();
+    const email = document.getElementById("f-email").value.trim();
+    const telefono = document.getElementById("f-telefono").value.trim();
+    const empresa = document.getElementById("f-empresa").value.trim();
+    const servicio = document.getElementById("f-servicio").value;
+    const mensaje = document.getElementById("f-mensaje").value.trim();
 
-  try {
-    await fetch(WEBHOOK, {
-      method: "POST",
-      mode: "no-cors",
-      body: formData
-    });
+    if (!nombre || !apellidos || !email || !servicio || !mensaje) {
+      error.textContent = "❌ Completa nombre, apellidos, email, servicio y mensaje.";
+      error.style.display = "block";
+      return;
+    }
 
-    form.reset();
-    success.style.display = "block";
-  } catch (err) {
-    console.error("Error enviando al webhook:", err);
-    error.style.display = "block";
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Enviar mensaje →";
+    btn.disabled = true;
+    btn.textContent = "Enviando…";
+
+    const params = new URLSearchParams();
+    params.append("nombre", nombre);
+    params.append("apellidos", apellidos);
+    params.append("email", email);
+    params.append("telefono", telefono);
+    params.append("empresa", empresa);
+    params.append("servicio", servicio);
+    params.append("mensaje", mensaje);
+    params.append("origen", window.location.href);
+    params.append("fecha_envio", new Date().toISOString());
+
+    try {
+      await fetch(WEBHOOK, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+        body: params.toString()
+      });
+
+      form.reset();
+      success.style.display = "block";
+    } catch (err) {
+      console.error("Error enviando al webhook:", err);
+      error.textContent = "❌ Error al enviar. Revisa la URL del webhook y tu escenario de Make.";
+      error.style.display = "block";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Enviar mensaje →";
+    }
   }
-}
+
   // ── CHATBOT ──────────────────────────────────────────────────────
-  let chatOpen   = false;
-  let isLoading  = false;
+  let chatOpen = false;
+  let isLoading = false;
 
   const INITIAL_QR = ['💰 Ver precios', '🌐 Quiero una web', '📈 ¿Cómo funciona el SEO?', '🤖 Automatización', '📞 Hablar con alguien'];
 
@@ -1516,8 +1574,9 @@ async function submitForm(e) {
     chatOpen = !chatOpen;
     document.getElementById('chatbot-window').classList.toggle('open', chatOpen);
     document.getElementById('chatbot-btn').classList.toggle('open', chatOpen);
-    document.getElementById('icon-chat').style.display  = chatOpen ? 'none'  : 'block';
+    document.getElementById('icon-chat').style.display = chatOpen ? 'none' : 'block';
     document.getElementById('icon-close').style.display = chatOpen ? 'block' : 'none';
+
     if (chatOpen) {
       const notif = document.getElementById('notifDot');
       if (notif) notif.remove();
@@ -1537,35 +1596,72 @@ async function submitForm(e) {
   }
 
   function addBotMsg(text) {
-    const c   = document.getElementById('chatMessages');
-    const row = document.createElement('div'); row.className = 'msg-row bot';
-    const wrap = document.createElement('div'); wrap.className = 'bot-row-wrap';
-    const av  = document.createElement('div'); av.className = 'bot-mini-avatar'; av.textContent = '🤖';
-    const col = document.createElement('div'); col.style.cssText = 'display:flex;flex-direction:column';
-    const b   = document.createElement('div'); b.className = 'chat-bubble'; b.innerHTML = fmt(text);
-    const t   = document.createElement('div'); t.className = 'msg-time'; t.textContent = getTime();
-    col.append(b, t); wrap.append(av, col); row.appendChild(wrap); c.appendChild(row);
+    const c = document.getElementById('chatMessages');
+    const row = document.createElement('div');
+    row.className = 'msg-row bot';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'bot-row-wrap';
+
+    const av = document.createElement('div');
+    av.className = 'bot-mini-avatar';
+    av.textContent = '🤖';
+
+    const col = document.createElement('div');
+    col.style.cssText = 'display:flex;flex-direction:column';
+
+    const b = document.createElement('div');
+    b.className = 'chat-bubble';
+    b.innerHTML = fmt(text);
+
+    const t = document.createElement('div');
+    t.className = 'msg-time';
+    t.textContent = getTime();
+
+    col.append(b, t);
+    wrap.append(av, col);
+    row.appendChild(wrap);
+    c.appendChild(row);
     c.scrollTop = c.scrollHeight;
   }
 
   function addUserMsg(text) {
-    const c   = document.getElementById('chatMessages');
+    const c = document.getElementById('chatMessages');
     clearQR();
-    const row = document.createElement('div'); row.className = 'msg-row user';
-    const b   = document.createElement('div'); b.className = 'chat-bubble'; b.textContent = text;
-    const t   = document.createElement('div'); t.className = 'msg-time';
+
+    const row = document.createElement('div');
+    row.className = 'msg-row user';
+
+    const b = document.createElement('div');
+    b.className = 'chat-bubble';
+    b.textContent = text;
+
+    const t = document.createElement('div');
+    t.className = 'msg-time';
     t.innerHTML = getTime() + ' <span class="tick-icon">✓✓</span>';
-    row.append(b, t); c.appendChild(row);
+
+    row.append(b, t);
+    c.appendChild(row);
     c.scrollTop = c.scrollHeight;
   }
 
   function showTyping() {
-    const c   = document.getElementById('chatMessages');
-    const row = document.createElement('div'); row.className = 'typing-row'; row.id = 'typingIndicator';
-    const av  = document.createElement('div'); av.className = 'bot-mini-avatar'; av.textContent = '🤖';
-    const b   = document.createElement('div'); b.className = 'typing-bubble';
+    const c = document.getElementById('chatMessages');
+    const row = document.createElement('div');
+    row.className = 'typing-row';
+    row.id = 'typingIndicator';
+
+    const av = document.createElement('div');
+    av.className = 'bot-mini-avatar';
+    av.textContent = '🤖';
+
+    const b = document.createElement('div');
+    b.className = 'typing-bubble';
     b.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
-    row.append(av, b); c.appendChild(row); c.scrollTop = c.scrollHeight;
+
+    row.append(av, b);
+    c.appendChild(row);
+    c.scrollTop = c.scrollHeight;
   }
 
   function hideTyping() {
@@ -1574,36 +1670,62 @@ async function submitForm(e) {
   }
 
   function showQR(list) {
-    const c = document.getElementById('quickReplies'); c.innerHTML = '';
+    const c = document.getElementById('quickReplies');
+    c.innerHTML = '';
+
     list.forEach(txt => {
-      const b = document.createElement('button'); b.className = 'qr-btn'; b.textContent = txt;
-      b.onclick = () => sendMessage(txt); c.appendChild(b);
+      const b = document.createElement('button');
+      b.className = 'qr-btn';
+      b.textContent = txt;
+      b.onclick = () => sendMessage(txt);
+      c.appendChild(b);
     });
   }
 
-  function clearQR() { document.getElementById('quickReplies').innerHTML = ''; }
+  function clearQR() {
+    document.getElementById('quickReplies').innerHTML = '';
+  }
 
-  function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
-  function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
-  function updateCharCount(el) { document.getElementById('charCount').textContent = el.value.length + '/500'; }
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+  }
+
+  function updateCharCount(el) {
+    document.getElementById('charCount').textContent = el.value.length + '/500';
+  }
 
   async function sendMessage(override) {
     if (isLoading) return;
+
     const inp = document.getElementById('chatInput');
     const txt = (override || inp.value).trim();
     if (!txt) return;
-    inp.value = ''; inp.style.height = 'auto';
+
+    inp.value = '';
+    inp.style.height = 'auto';
     document.getElementById('charCount').textContent = '0/500';
+
     addUserMsg(txt);
     isLoading = true;
     document.getElementById('sendBtn').disabled = true;
+
     await new Promise(r => setTimeout(r, 700 + Math.random() * 600));
     showTyping();
     await new Promise(r => setTimeout(r, 400));
     hideTyping();
+
     const reply = getBotReply(txt);
     addBotMsg(reply);
     showQR(getFollowUps(txt.toLowerCase()));
+
     isLoading = false;
     document.getElementById('sendBtn').disabled = false;
     document.getElementById('chatInput').focus();
@@ -1611,24 +1733,34 @@ async function submitForm(e) {
 
   function getBotReply(msg) {
     const m = msg.toLowerCase();
+
     if (m.includes('precio') || m.includes('cuesta') || m.includes('cuánto') || m.includes('cuanto') || m.includes('€') || m.includes('tarifa'))
       return 'Nuestros planes:\n\n• **Landing page**: desde **490€ + 39€/mes**\n• **Web completa**: desde **690€ + 69€/mes**\n• **SEO local**: desde **69€/mes**\n• **Mantenimiento**: desde **39€/mes**\n\nEl más solicitado es el plan Profesional. ¿Te interesa alguno?';
+
     if (m.includes('web') || m.includes('página') || m.includes('landing') || m.includes('diseño'))
       return 'Hacemos webs a medida:\n\n✓ Diseño personalizado\n✓ Responsive (móvil/tablet)\n✓ SEO básico incluido\n✓ Formulario + WhatsApp integrado\n\nDesde **490€**. ¿Para qué tipo de negocio es?';
+
     if (m.includes('seo') || m.includes('google') || m.includes('posicion'))
       return 'SEO Local:\n\n✓ Posicionamiento en Google Maps\n✓ Palabras clave de tu zona\n✓ Google Business optimizado\n✓ Informe mensual de resultados\n\nDesde **69€/mes**. Resultados visibles en 2-4 meses. ¿Te interesa?';
+
     if (m.includes('chatbot') || m.includes('automatiz') || m.includes('bot') || m.includes('ia'))
       return 'Automatizaciones con IA:\n\n✓ Chatbots que responden 24/7\n✓ Presupuestos automáticos\n✓ Captación de leads\n✓ Integración con WhatsApp\n\nPrecio a medida según el proyecto. ¿Qué proceso quieres automatizar?';
+
     if (m.includes('contact') || m.includes('hablar') || m.includes('llamar') || m.includes('reunión'))
       return 'Puedes contactarnos por:\n\n✉️ **404digitals@gmail.com**\n💬 **WhatsApp**: +34 654 10 17 80\n📞 **Teléfono**: +34 622 20 32 96\n\nRespondemos en menos de 24h. ¿Prefieres que te llamemos nosotros?';
+
     if (m.includes('tarda') || m.includes('plazo') || m.includes('tiempo') || m.includes('semana'))
       return 'Nuestros plazos:\n\n⚡ Landing page: **5-7 días**\n🚀 Web completa: **2-3 semanas**\n📈 SEO (primeros resultados): **2-4 meses**\n\n¿Tienes una fecha límite en mente?';
+
     if (m.includes('portfolio') || m.includes('proyecto') || m.includes('ejemplo') || m.includes('trabajo'))
       return 'Algunos proyectos recientes:\n\n🦷 Clínica Dental → **+340% consultas online**\n🔧 Taller Mecánico → chatbot de presupuestos automáticos\n🍽️ Restaurante → **Top 3 Google** en 4 meses\n👗 Tienda de moda → e-commerce 200+ productos\n\n¿De qué sector es tu negocio?';
+
     if (m.includes('hola') || m.includes('buenos') || m.includes('buenas') || m.includes('hey'))
       return '¡Hola! 👋 ¿En qué puedo ayudarte hoy?';
+
     if (m.includes('gracias'))
       return '¡De nada! 😊 ¿Hay algo más en lo que pueda ayudarte?';
+
     return 'Cuéntame más sobre tu negocio y lo que necesitas. Así puedo orientarte mejor. 😊';
   }
 
