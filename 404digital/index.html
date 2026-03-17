@@ -236,7 +236,6 @@
       padding: 2.5rem 2rem;
       border-right: 1px solid var(--border);
       text-align: center;
-      position: relative;
       transition: background 0.3s;
     }
     .metric:hover { background: rgba(99,179,237,0.03); }
@@ -665,7 +664,6 @@
       box-shadow: 0 0 0 6px rgba(99,179,237,0.08), 0 12px 40px rgba(0,0,0,0.7);
     }
     #chatbot-btn svg { width: 22px; height: 22px; color: var(--cyan); transition: transform 0.3s; flex-shrink: 0; }
-    #chatbot-btn.open svg { transform: rotate(180deg); }
 
     .btn-ring {
       position: absolute; inset: -5px; border-radius: 50%;
@@ -827,7 +825,6 @@
     @keyframes typePulse { 0%,80%,100%{opacity:0.25;transform:scale(0.85)} 40%{opacity:1;transform:scale(1.1)} }
 
     .quick-replies { display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 0 1.2rem 0.8rem; animation: fadeUp 0.3s ease both; }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
     .qr-btn {
       background: transparent; border: 1px solid var(--border2); color: var(--cyan);
       font-family: var(--body); font-size: 0.78rem; font-weight: 500;
@@ -1188,43 +1185,57 @@
       </div>
     </div>
     <div>
-      <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="f-nombre">Nombre</label>
-            <input id="f-nombre" type="text" placeholder="Tu nombre" required/>
-          </div>
-          <div class="form-group">
-            <label for="f-email">Email</label>
-            <input id="f-email" type="email" placeholder="tu@email.com" required/>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="f-telefono">Teléfono</label>
-            <input id="f-telefono" type="tel" placeholder="+34 600 000 000"/>
-          </div>
-          <div class="form-group">
-            <label for="f-servicio">Servicio</label>
-            <select id="f-servicio">
-              <option value="">¿Qué necesitas?</option>
-              <option>Web / Landing page</option>
-              <option>SEO local</option>
-              <option>Automatización / IA</option>
-              <option>Mantenimiento</option>
-              <option>Todo lo anterior</option>
-              <option>Cualquier otra</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="f-mensaje">Cuéntanos tu proyecto</label>
-          <textarea id="f-mensaje" placeholder="Describe brevemente tu negocio y qué necesitas conseguir…"></textarea>
-        </div>
-        <button type="submit" class="form-submit" id="formBtn">Enviar mensaje →</button>
-        <div class="form-success" id="formSuccess">✅ Mensaje enviado. Te contactamos en menos de 24 horas.</div>
-        <div class="form-error" id="formError">❌ Error al enviar. Escríbenos directamente a 404digitals@gmail.com</div>
-      </form>
+<form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
+  <div class="form-row">
+    <div class="form-group">
+      <label for="f-nombre">Nombre</label>
+      <input id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" required />
+    </div>
+    <div class="form-group">
+      <label for="f-apellidos">Apellidos</label>
+      <input id="f-apellidos" name="apellidos" type="text" placeholder="Tus apellidos" required />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="f-email">Email</label>
+      <input id="f-email" name="email" type="email" placeholder="tu@email.com" required />
+    </div>
+    <div class="form-group">
+      <label for="f-telefono">Teléfono</label>
+      <input id="f-telefono" name="telefono" type="tel" placeholder="+34 600 000 000" />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="f-empresa">Empresa</label>
+      <input id="f-empresa" name="empresa" type="text" placeholder="Nombre de tu empresa" />
+    </div>
+    <div class="form-group">
+      <label for="f-servicio">Servicio</label>
+      <select id="f-servicio" name="servicio" required>
+        <option value="">¿Qué necesitas?</option>
+        <option value="Web / Landing page">Web / Landing page</option>
+        <option value="SEO local">SEO local</option>
+        <option value="Automatización / IA">Automatización / IA</option>
+        <option value="Mantenimiento">Mantenimiento</option>
+        <option value="Todo lo anterior">Todo lo anterior</option>
+        <option value="Otro">Otro</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="f-mensaje">Cuéntanos tu proyecto</label>
+    <textarea id="f-mensaje" name="mensaje" placeholder="Describe brevemente tu negocio y qué necesitas conseguir…" required></textarea>
+  </div>
+
+  <button type="submit" class="form-submit" id="formBtn">Enviar mensaje →</button>
+  <div class="form-success" id="formSuccess">✅ Mensaje enviado. Te contactamos en menos de 24 horas.</div>
+  <div class="form-error" id="formError">❌ Error al enviar. Escríbenos directamente a 404digitals@gmail.com</div>
+</form>
     </div>
   </div>
 </section>
@@ -1356,7 +1367,7 @@
   <div class="chat-context-bar">
     <div class="ctx-chip active">
       <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
-      IA · Claude Sonnet
+      IA Activa
     </div>
     <div class="ctx-chip">🌐 Web & SEO</div>
     <div class="ctx-chip">🤖 IA & Automatización</div>
@@ -1383,52 +1394,62 @@
 </div>
 
 <script>
-  // ── CURSOR ──
+  // ── WEBHOOK Make.com ──────────────────────────────────────────────
+  const WEBHOOK = 'https://hook.eu1.make.com/qjuob4irpdqlz9726wam65ck9n2u9dr9';
+
+  // ── CURSOR ───────────────────────────────────────────────────────
   const cursor = document.getElementById('cursor');
   const ring   = document.getElementById('cursor-ring');
-  let mx=0, my=0, rx=0, ry=0;
+  let mx = 0, my = 0, rx = 0, ry = 0;
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx-5+'px'; cursor.style.top = my-5+'px';
+    cursor.style.left = mx - 5 + 'px';
+    cursor.style.top  = my - 5 + 'px';
   });
-  (function animRing(){
-    rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
-    ring.style.left = rx-18+'px'; ring.style.top = ry-18+'px';
+  (function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx - 18 + 'px';
+    ring.style.top  = ry - 18 + 'px';
     requestAnimationFrame(animRing);
   })();
 
-  // ── SCROLL REVEAL ──
+  // ── SCROLL REVEAL ────────────────────────────────────────────────
   const revealObs = new IntersectionObserver(entries => {
-    entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'), (i%4)*80); });
-  }, {threshold:0.1});
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), (i % 4) * 80);
+    });
+  }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  // ── HEADER SCROLL ──
+  // ── HEADER SCROLL ────────────────────────────────────────────────
   const header = document.querySelector('header');
   window.addEventListener('scroll', () => {
-    header.style.background = window.scrollY > 60 ? 'rgba(5,5,8,0.97)' : 'rgba(5,5,8,0.85)';
+    header.style.background = window.scrollY > 60
+      ? 'rgba(5,5,8,0.97)'
+      : 'rgba(5,5,8,0.85)';
   });
 
-  // ── COUNTER ANIMATION ──
+  // ── COUNTER ANIMATION ────────────────────────────────────────────
   const metricsObs = new IntersectionObserver(entries => {
     if (!entries[0].isIntersecting) return;
     metricsObs.disconnect();
     document.querySelectorAll('.metric-num').forEach(el => {
-      const txt = el.textContent;
-      const num = parseFloat(txt.replace(/[^0-9.]/g,''));
+      const txt    = el.textContent;
+      const num    = parseFloat(txt.replace(/[^0-9.]/g, ''));
       if (!num) return;
-      const suffix = txt.replace(/[0-9.]/g,'');
-      let s = 0, step = num/60;
+      const suffix = txt.replace(/[0-9.]/g, '');
+      let s = 0, step = num / 60;
       const t = setInterval(() => {
-        s = Math.min(s+step, num);
+        s = Math.min(s + step, num);
         el.textContent = (Number.isInteger(num) ? Math.floor(s) : s.toFixed(1)) + suffix;
         if (s >= num) clearInterval(t);
       }, 16);
     });
-  }, {threshold:0.5});
+  }, { threshold: 0.5 });
   metricsObs.observe(document.getElementById('metrics'));
 
-  // ── FAQ ──
+  // ── FAQ ──────────────────────────────────────────────────────────
   function toggleFaq(el) {
     const item = el.parentElement;
     const open = item.classList.contains('open');
@@ -1436,9 +1457,7 @@
     if (!open) item.classList.add('open');
   }
 
-  // ── FORMULARIO → MAKE → GOOGLE SHEETS ──
-  const WEBHOOK = 'https://hook.eu1.make.com/xw948jodsm422lcm61mgg3qlyleuqek5';
-
+  // ── FORMULARIO → MAKE WEBHOOK ────────────────────────────────────
   async function submitForm(e) {
     e.preventDefault();
     const btn     = document.getElementById('formBtn');
@@ -1446,68 +1465,46 @@
     const error   = document.getElementById('formError');
 
     btn.textContent = 'Enviando…';
-    btn.disabled = true;
+    btn.disabled    = true;
     success.style.display = 'none';
     error.style.display   = 'none';
 
-    const payload = {
-      nombre:    document.getElementById('f-nombre').value.trim(),
-      email:     document.getElementById('f-email').value.trim(),
-      telefono:  document.getElementById('f-telefono').value.trim(),
-      servicio:  document.getElementById('f-servicio').value,
-      mensaje:   document.getElementById('f-mensaje').value.trim(),
-      timestamp: new Date().toLocaleString('es-ES')
-    };
+    // FormData: funciona perfectamente con Make.com via no-cors
+    const fd = new FormData();
+    fd.append("nombre",    document.getElementById("f-nombre").value.trim());
+    fd.append("email",     document.getElementById("f-email").value.trim());
+    fd.append("telefono",  document.getElementById("f-telefono").value.trim());
+    fd.append("servicio",  document.getElementById("f-servicio").value);
+    fd.append("mensaje",   document.getElementById("f-mensaje").value.trim());
+    fd.append("timestamp", new Date().toLocaleString("es-ES"));
 
     try {
-      const res = await fetch(WEBHOOK, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(payload)
+      await fetch(WEBHOOK, {
+        method: "POST",
+        mode:   "no-cors",
+        body:   fd
       });
-
-      if (res.ok) {
-        success.style.display = 'block';
-        document.getElementById('contactForm').reset();
-      } else {
-        throw new Error('HTTP ' + res.status);
-      }
+      // Con no-cors el navegador no puede leer el status, pero Make recibe los datos
+      success.style.display = 'block';
+      document.getElementById('contactForm').reset();
     } catch (err) {
       console.error('Webhook error:', err);
       error.style.display = 'block';
     } finally {
       btn.textContent = 'Enviar mensaje →';
-      btn.disabled = false;
+      btn.disabled    = false;
     }
   }
 
-  // ── CHATBOT ──
-  let chatOpen  = false;
-  let isLoading = false;
-  let msgHistory = [];
+  // ── CHATBOT ──────────────────────────────────────────────────────
+  let chatOpen   = false;
+  let isLoading  = false;
 
-  const SYSTEM_PROMPT = `Eres el asistente virtual de 404 Digitals, una agencia de soluciones digitales con sede en Oviedo, Asturias.
-
-INFORMACIÓN:
-- Email: 404digitals@gmail.com · WhatsApp: +34 654 10 17 80 · Teléfono: +34 622 20 32 96
-- Proyectos: +10 · Valoración: 4.8★ · Respuesta: en menos de 24h
-
-PLANES:
-- Básico: 490€ + 39€/mes → Landing page, diseño a medida, responsive, formulario, WhatsApp
-- Profesional (más popular): 690€ + 69€/mes → Web multi-sección, SEO local, chatbot básico, analytics, 1 mes mantenimiento gratis
-- Premium: 900€ + 99€/mes → Web avanzada, chatbot IA, SEO + contenido, automatizaciones, soporte prioritario, tests A/B
-
-SERVICIOS: Webs desde 490€ · SEO desde 69€/mes · Automatización IA a medida · Mantenimiento desde 39€/mes
-
-PLAZOS: Landing 5-7 días · Web completa 2-3 semanas · SEO resultados 2-4 meses
-
-INSTRUCCIONES: Responde en español, tono cercano. Máximo 3-4 líneas. Una pregunta por turno. Usa **negrita** para precios. No inventes datos.`;
-
-  const INITIAL_QR = ["💰 Ver precios","🌐 Quiero una web","📈 ¿Cómo funciona el SEO?","🤖 Automatización","📞 Hablar con alguien"];
+  const INITIAL_QR = ['💰 Ver precios', '🌐 Quiero una web', '📈 ¿Cómo funciona el SEO?', '🤖 Automatización', '📞 Hablar con alguien'];
 
   window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
-      addBotMsg("¡Hola! 👋 Soy el asistente de **404 Digitals**.\n\nEstoy aquí para resolver tus dudas sobre servicios, precios y presencia digital. ¿En qué puedo ayudarte?");
+      addBotMsg('¡Hola! 👋 Soy el asistente de **404 Digitals**.\n\nEstoy aquí para resolver tus dudas sobre servicios, precios y presencia digital. ¿En qué puedo ayudarte?');
       showQR(INITIAL_QR);
     }, 600);
   });
@@ -1518,54 +1515,60 @@ INSTRUCCIONES: Responde en español, tono cercano. Máximo 3-4 líneas. Una preg
     document.getElementById('chatbot-btn').classList.toggle('open', chatOpen);
     document.getElementById('icon-chat').style.display  = chatOpen ? 'none'  : 'block';
     document.getElementById('icon-close').style.display = chatOpen ? 'block' : 'none';
-    const notif = document.getElementById('notifDot');
     if (chatOpen) {
+      const notif = document.getElementById('notifDot');
       if (notif) notif.remove();
       setTimeout(() => document.getElementById('chatInput').focus(), 350);
     }
   }
 
   function getTime() {
-    return new Date().toLocaleTimeString('es-ES', {hour:'2-digit',minute:'2-digit'});
+    return new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
   }
 
   function fmt(t) {
-    return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p style="margin-top:0.5rem">').replace(/\n/g,'<br>');
+    return t
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n\n/g, '</p><p style="margin-top:0.5rem">')
+      .replace(/\n/g, '<br>');
   }
 
   function addBotMsg(text) {
-    const c = document.getElementById('chatMessages');
+    const c   = document.getElementById('chatMessages');
     const row = document.createElement('div'); row.className = 'msg-row bot';
     const wrap = document.createElement('div'); wrap.className = 'bot-row-wrap';
-    const av = document.createElement('div'); av.className = 'bot-mini-avatar'; av.textContent = '🤖';
+    const av  = document.createElement('div'); av.className = 'bot-mini-avatar'; av.textContent = '🤖';
     const col = document.createElement('div'); col.style.cssText = 'display:flex;flex-direction:column';
-    const b = document.createElement('div'); b.className = 'chat-bubble'; b.innerHTML = fmt(text);
-    const t = document.createElement('div'); t.className = 'msg-time'; t.textContent = getTime();
-    col.append(b,t); wrap.append(av,col); row.appendChild(wrap); c.appendChild(row);
+    const b   = document.createElement('div'); b.className = 'chat-bubble'; b.innerHTML = fmt(text);
+    const t   = document.createElement('div'); t.className = 'msg-time'; t.textContent = getTime();
+    col.append(b, t); wrap.append(av, col); row.appendChild(wrap); c.appendChild(row);
     c.scrollTop = c.scrollHeight;
   }
 
   function addUserMsg(text) {
-    const c = document.getElementById('chatMessages');
+    const c   = document.getElementById('chatMessages');
     clearQR();
     const row = document.createElement('div'); row.className = 'msg-row user';
-    const b = document.createElement('div'); b.className = 'chat-bubble'; b.textContent = text;
-    const t = document.createElement('div'); t.className = 'msg-time';
+    const b   = document.createElement('div'); b.className = 'chat-bubble'; b.textContent = text;
+    const t   = document.createElement('div'); t.className = 'msg-time';
     t.innerHTML = getTime() + ' <span class="tick-icon">✓✓</span>';
-    row.append(b,t); c.appendChild(row);
+    row.append(b, t); c.appendChild(row);
     c.scrollTop = c.scrollHeight;
   }
 
   function showTyping() {
-    const c = document.getElementById('chatMessages');
+    const c   = document.getElementById('chatMessages');
     const row = document.createElement('div'); row.className = 'typing-row'; row.id = 'typingIndicator';
-    const av = document.createElement('div'); av.className = 'bot-mini-avatar'; av.textContent = '🤖';
-    const b = document.createElement('div'); b.className = 'typing-bubble';
+    const av  = document.createElement('div'); av.className = 'bot-mini-avatar'; av.textContent = '🤖';
+    const b   = document.createElement('div'); b.className = 'typing-bubble';
     b.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
-    row.append(av,b); c.appendChild(row); c.scrollTop = c.scrollHeight;
+    row.append(av, b); c.appendChild(row); c.scrollTop = c.scrollHeight;
   }
 
-  function hideTyping() { const t = document.getElementById('typingIndicator'); if(t) t.remove(); }
+  function hideTyping() {
+    const t = document.getElementById('typingIndicator');
+    if (t) t.remove();
+  }
 
   function showQR(list) {
     const c = document.getElementById('quickReplies'); c.innerHTML = '';
@@ -1574,11 +1577,12 @@ INSTRUCCIONES: Responde en español, tono cercano. Máximo 3-4 líneas. Una preg
       b.onclick = () => sendMessage(txt); c.appendChild(b);
     });
   }
+
   function clearQR() { document.getElementById('quickReplies').innerHTML = ''; }
 
-  function handleKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();} }
-  function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; }
-  function updateCharCount(el) { document.getElementById('charCount').textContent=el.value.length+'/500'; }
+  function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+  function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
+  function updateCharCount(el) { document.getElementById('charCount').textContent = el.value.length + '/500'; }
 
   async function sendMessage(override) {
     if (isLoading) return;
@@ -1588,16 +1592,14 @@ INSTRUCCIONES: Responde en español, tono cercano. Máximo 3-4 líneas. Una preg
     inp.value = ''; inp.style.height = 'auto';
     document.getElementById('charCount').textContent = '0/500';
     addUserMsg(txt);
-    msgHistory.push({role:'user', content:txt});
     isLoading = true;
     document.getElementById('sendBtn').disabled = true;
-    await new Promise(r => setTimeout(r, 700 + Math.random()*600));
+    await new Promise(r => setTimeout(r, 700 + Math.random() * 600));
     showTyping();
     await new Promise(r => setTimeout(r, 400));
     hideTyping();
     const reply = getBotReply(txt);
     addBotMsg(reply);
-    msgHistory.push({role:'assistant', content:reply});
     showQR(getFollowUps(txt.toLowerCase()));
     isLoading = false;
     document.getElementById('sendBtn').disabled = false;
@@ -1606,42 +1608,41 @@ INSTRUCCIONES: Responde en español, tono cercano. Máximo 3-4 líneas. Una preg
 
   function getBotReply(msg) {
     const m = msg.toLowerCase();
-    if (m.includes('precio')||m.includes('cuesta')||m.includes('cuánto')||m.includes('cuanto')||m.includes('€')||m.includes('tarifa'))
-      return "Nuestros planes:\n\n• **Landing page**: desde **490€ + 39€/mes**\n• **Web completa**: desde **690€ + 69€/mes**\n• **SEO local**: desde **69€/mes**\n• **Mantenimiento**: desde **39€/mes**\n\nEl más solicitado es el plan Profesional. ¿Te interesa alguno?";
-    if (m.includes('web')||m.includes('página')||m.includes('landing')||m.includes('diseño'))
-      return "Hacemos webs a medida:\n\n✓ Diseño personalizado\n✓ Responsive (móvil/tablet)\n✓ SEO básico incluido\n✓ Formulario + WhatsApp integrado\n\nDesde **490€**. ¿Para qué tipo de negocio es?";
-    if (m.includes('seo')||m.includes('google')||m.includes('posicion'))
-      return "SEO Local:\n\n✓ Posicionamiento en Google Maps\n✓ Palabras clave de tu zona\n✓ Google Business optimizado\n✓ Informe mensual de resultados\n\nDesde **69€/mes**. Resultados visibles en 2-4 meses. ¿Te interesa?";
-    if (m.includes('chatbot')||m.includes('automatiz')||m.includes('bot')||m.includes('ia'))
-      return "Automatizaciones con IA:\n\n✓ Chatbots que responden 24/7\n✓ Presupuestos automáticos\n✓ Captación de leads\n✓ Integración con WhatsApp\n\nPrecio a medida según el proyecto. ¿Qué proceso quieres automatizar?";
-    if (m.includes('contact')||m.includes('hablar')||m.includes('llamar')||m.includes('reunión'))
-      return "Puedes contactarnos por:\n\n✉️ **404digitals@gmail.com**\n💬 **WhatsApp**: +34 654 10 17 80\n📞 **Teléfono**: +34 622 20 32 96\n\nRespondemos en menos de 24h. ¿Prefieres que te llamemos nosotros?";
-    if (m.includes('tarda')||m.includes('plazo')||m.includes('tiempo')||m.includes('semana'))
-      return "Nuestros plazos:\n\n⚡ Landing page: **5-7 días**\n🚀 Web completa: **2-3 semanas**\n📈 SEO (primeros resultados): **2-4 meses**\n\n¿Tienes una fecha límite en mente?";
-    if (m.includes('portfolio')||m.includes('proyecto')||m.includes('ejemplo')||m.includes('trabajo'))
-      return "Algunos proyectos recientes:\n\n🦷 Clínica Dental → **+340% consultas online**\n🔧 Taller Mecánico → chatbot de presupuestos automáticos\n🍽️ Restaurante → **Top 3 Google** en 4 meses\n👗 Tienda de moda → e-commerce 200+ productos\n\n¿De qué sector es tu negocio?";
-    if (m.includes('hola')||m.includes('buenos')||m.includes('buenas')||m.includes('hey'))
-      return "¡Hola! 👋 ¿En qué puedo ayudarte hoy?";
+    if (m.includes('precio') || m.includes('cuesta') || m.includes('cuánto') || m.includes('cuanto') || m.includes('€') || m.includes('tarifa'))
+      return 'Nuestros planes:\n\n• **Landing page**: desde **490€ + 39€/mes**\n• **Web completa**: desde **690€ + 69€/mes**\n• **SEO local**: desde **69€/mes**\n• **Mantenimiento**: desde **39€/mes**\n\nEl más solicitado es el plan Profesional. ¿Te interesa alguno?';
+    if (m.includes('web') || m.includes('página') || m.includes('landing') || m.includes('diseño'))
+      return 'Hacemos webs a medida:\n\n✓ Diseño personalizado\n✓ Responsive (móvil/tablet)\n✓ SEO básico incluido\n✓ Formulario + WhatsApp integrado\n\nDesde **490€**. ¿Para qué tipo de negocio es?';
+    if (m.includes('seo') || m.includes('google') || m.includes('posicion'))
+      return 'SEO Local:\n\n✓ Posicionamiento en Google Maps\n✓ Palabras clave de tu zona\n✓ Google Business optimizado\n✓ Informe mensual de resultados\n\nDesde **69€/mes**. Resultados visibles en 2-4 meses. ¿Te interesa?';
+    if (m.includes('chatbot') || m.includes('automatiz') || m.includes('bot') || m.includes('ia'))
+      return 'Automatizaciones con IA:\n\n✓ Chatbots que responden 24/7\n✓ Presupuestos automáticos\n✓ Captación de leads\n✓ Integración con WhatsApp\n\nPrecio a medida según el proyecto. ¿Qué proceso quieres automatizar?';
+    if (m.includes('contact') || m.includes('hablar') || m.includes('llamar') || m.includes('reunión'))
+      return 'Puedes contactarnos por:\n\n✉️ **404digitals@gmail.com**\n💬 **WhatsApp**: +34 654 10 17 80\n📞 **Teléfono**: +34 622 20 32 96\n\nRespondemos en menos de 24h. ¿Prefieres que te llamemos nosotros?';
+    if (m.includes('tarda') || m.includes('plazo') || m.includes('tiempo') || m.includes('semana'))
+      return 'Nuestros plazos:\n\n⚡ Landing page: **5-7 días**\n🚀 Web completa: **2-3 semanas**\n📈 SEO (primeros resultados): **2-4 meses**\n\n¿Tienes una fecha límite en mente?';
+    if (m.includes('portfolio') || m.includes('proyecto') || m.includes('ejemplo') || m.includes('trabajo'))
+      return 'Algunos proyectos recientes:\n\n🦷 Clínica Dental → **+340% consultas online**\n🔧 Taller Mecánico → chatbot de presupuestos automáticos\n🍽️ Restaurante → **Top 3 Google** en 4 meses\n👗 Tienda de moda → e-commerce 200+ productos\n\n¿De qué sector es tu negocio?';
+    if (m.includes('hola') || m.includes('buenos') || m.includes('buenas') || m.includes('hey'))
+      return '¡Hola! 👋 ¿En qué puedo ayudarte hoy?';
     if (m.includes('gracias'))
-      return "¡De nada! 😊 ¿Hay algo más en lo que pueda ayudarte?";
-    return "Cuéntame más sobre tu negocio y lo que necesitas. Así puedo orientarte mejor. 😊";
+      return '¡De nada! 😊 ¿Hay algo más en lo que pueda ayudarte?';
+    return 'Cuéntame más sobre tu negocio y lo que necesitas. Así puedo orientarte mejor. 😊';
   }
 
   function getFollowUps(m) {
-    if (m.includes('precio')||m.includes('€')||m.includes('plan')) return ['🔥 Plan Profesional','💎 Plan Premium','📅 Reunión gratuita'];
-    if (m.includes('seo')||m.includes('google')) return ['⏱️ ¿Cuándo veré resultados?','💰 ¿Cuánto cuesta?','📞 Hablar con alguien'];
-    if (m.includes('web')||m.includes('landing')) return ['⏱️ ¿Cuánto tarda?','🖼️ Ver portfolio','💰 Ver precios'];
-    if (m.includes('chatbot')||m.includes('ia')||m.includes('automatiz')) return ['💰 ¿Cuánto cuesta?','📋 Ver ejemplos','📞 Hablar con alguien'];
-    if (m.includes('contact')||m.includes('hablar')) return ['✉️ Email','💬 WhatsApp','📞 Llamar'];
-    return ['💰 Ver precios','📅 Reunión gratuita','🌐 Quiero una web'];
+    if (m.includes('precio') || m.includes('€') || m.includes('plan')) return ['🔥 Plan Profesional', '💎 Plan Premium', '📅 Reunión gratuita'];
+    if (m.includes('seo') || m.includes('google')) return ['⏱️ ¿Cuándo veré resultados?', '💰 ¿Cuánto cuesta?', '📞 Hablar con alguien'];
+    if (m.includes('web') || m.includes('landing')) return ['⏱️ ¿Cuánto tarda?', '🖼️ Ver portfolio', '💰 Ver precios'];
+    if (m.includes('chatbot') || m.includes('ia') || m.includes('automatiz')) return ['💰 ¿Cuánto cuesta?', '📋 Ver ejemplos', '📞 Hablar con alguien'];
+    if (m.includes('contact') || m.includes('hablar')) return ['✉️ Email', '💬 WhatsApp', '📞 Llamar'];
+    return ['💰 Ver precios', '📅 Reunión gratuita', '🌐 Quiero una web'];
   }
 
   function clearChat() {
-    msgHistory = [];
     document.getElementById('chatMessages').innerHTML = '<div class="date-divider">Hoy</div>';
     clearQR();
     setTimeout(() => {
-      addBotMsg("Conversación reiniciada. ¿En qué puedo ayudarte? 😊");
+      addBotMsg('Conversación reiniciada. ¿En qué puedo ayudarte? 😊');
       showQR(INITIAL_QR);
     }, 200);
   }
