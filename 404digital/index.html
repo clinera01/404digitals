@@ -1458,7 +1458,7 @@
   }
 
   // ── FORMULARIO → MAKE WEBHOOK ────────────────────────────────────
- async function submitForm(e) {
+async function submitForm(e) {
   e.preventDefault();
 
   const btn = document.getElementById("formBtn");
@@ -1471,28 +1471,23 @@
   btn.disabled = true;
   btn.textContent = "Enviando…";
 
-  const payload = {
-    nombre: document.getElementById("f-nombre").value.trim(),
-    apellidos: document.getElementById("f-apellidos").value.trim(),
-    email: document.getElementById("f-email").value.trim(),
-    telefono: document.getElementById("f-telefono").value.trim(),
-    empresa: document.getElementById("f-empresa").value.trim(),
-    servicio: document.getElementById("f-servicio").value,
-    mensaje: document.getElementById("f-mensaje").value.trim()
-  };
+  const formData = new FormData();
+  formData.append("nombre", document.getElementById("f-nombre").value.trim());
+  formData.append("apellidos", document.getElementById("f-apellidos").value.trim());
+  formData.append("email", document.getElementById("f-email").value.trim());
+  formData.append("telefono", document.getElementById("f-telefono").value.trim());
+  formData.append("empresa", document.getElementById("f-empresa").value.trim());
+  formData.append("servicio", document.getElementById("f-servicio").value);
+  formData.append("mensaje", document.getElementById("f-mensaje").value.trim());
+  formData.append("origen", window.location.href);
+  formData.append("fecha_envio", new Date().toISOString());
 
   try {
-    const response = await fetch(WEBHOOK, {
+    await fetch(WEBHOOK, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
+      mode: "no-cors",
+      body: formData
     });
-
-    if (!response.ok) {
-      throw new Error("Error al enviar al webhook");
-    }
 
     form.reset();
     success.style.display = "block";
@@ -1504,7 +1499,6 @@
     btn.textContent = "Enviar mensaje →";
   }
 }
-
   // ── CHATBOT ──────────────────────────────────────────────────────
   let chatOpen   = false;
   let isLoading  = false;
